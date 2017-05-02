@@ -1,0 +1,71 @@
+\section{Interrupter}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Skjema/FunksjonsBlokkskjema.pdf}
+    \caption{Block diagram}
+    \label{fig:block}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[trim={6.5cm 5cm 7cm 5.5cm},clip,width=\textwidth]{Skjema/TK514_Interrupter.pdf}
+    \caption{Interrupter (TK514)}
+    \label{fig:interrupter}
+\end{figure}
+
+The interrupter generates the signal which drives the resonant circuit (coil rig) at its resonant frequency $f_0$. As long as the input signal X2 is active the output is driven at the resonant frequency $f_0$. It does this by the means of a positive feedback loop. The feedback signal X8 is retrieved with a sensing transformer around the output wire from the power amplifier, before being clamped, rectified, and schmidt triggered. The positive flanks of this signal represents when the output current passes zero (this is when we want to switch the polarity of the output). This signal is fed to the output via gates controlled by a latch, the signal to one of the outputs is inverted (for push-pull operation).
+
+Initially no current is flowing in the resonant circuit therefore no voltage is present on X8 and the input U2A is low. Pin 1 of U3A is low and pin 4 of U1B is high. And the clock input of the latch (U1A) is high. Reset is low. When X2 goes high the SD (Set Data) input of the latch (U1A) is activated, reset (RD) goes low, and the output (Q) goes high. Then X4B goes high and causes a step response in the resonant circuit. The feedback transformer is oriented such that this current direction gives a negative voltage on X8 and thus still low signal on the input of U2A. When the current direction changes the signal on the input of U2A goes from low to high and X4A goes high and X4B goes low. This reverses the voltage on the resonant circuit in phase with the step response and triggers an additional step response in phase with the already ongoing one. This cycle continues until X2 goes low. When X2 goes low SD goes low, but Q is still high until the next negative flank on X8 (inverted through U2A). When D (wich is strapped low) is clocked through the latch. and Q goes low and both X4A and X4B goes low. And no further energy is supplied to the resonant circuit and the step response completes.
+
+The function of L1 and R2 is to introduce a phase lead on the voltage of X8 in relation of the current on X8. This is so that one can compensate for delays in the circuit. When the circuit is inductive the voltage will lead the current. By adjusting the value of R2 the relation between the inductance and resistance is changed and thus the phase angle is changed. And the time between the voltage crosses zero and the current crosses zero can be adjusted. This time should be equal to the time it takes the feedback signal X8 to propagate through the logic and for the IGBT to turn on or off. So that we will switch when the current in the resonant circuit is zero (Zero current switching). This is to reduce energy lost from the resonant circuit and to minimize power burned in the transistors (when switching).
+
+The function of the network connected to the reset (RD) of the latch (U1A) is to reset the latch after a delay in the case that a zero crossing is not detected on X8 after X2 goes low. When X2 goes high the input of U2D goes low immediately due to the capacitor C2 being discharged through D7, but when X2 goes low the capacitor will be charged through R3 and there will be a delay before the latch is reset.
+
+D3-D6 are protection diodes which clamp the feedback signal to safe voltages. The network L1 and R2 introduces a tunable phase lead on the voltage. C1 and R1 is a filter to remove noise. D1 and D2 clamps the voltage to 0-5V.
+
+
+%%%%%%% Stikkord
+%The output of T1 is loaded with a pair of zener diodes with ultrafast diodes to block the slow recovery of the zeners (they are not allowed to be forward biased).  Since the transformer ratio is ~1:1000, by normal transformer action, the current should be 1/1000th of the primary current, and the voltage should be 1000X greater.
+
+%The square wave is also passed through a capacitor to ensure only AC content is passed
+
+%To further protect the logic gate of U1, we have a pair of fast logic diodes to clamp any voltage excursions to the supply rails.
+
+%There are some tricks used to make the JK flip flop (U2) to operate properly in the circuit.  As shown when the interrupter goes HI, CLR\ is LOW.  This puts Q\ in a HI state.  Now, we see that there is a inverter (part of U1) that feeds from the interrupter signal, with its output feeding into an RC circuit and then another inverter.  What this does is delay the HI input to the PRE on the flip flop.  Note that before the PRE is HI, the output from the flip flop is whatever present on CLR\.  If we did not delay the input to PRE, then our interrupter pulse would never be passed along to the gate driver ENABLE (pin 3 on the UCC3732X).  Also note that the flip flop only does its synchronized shut down when PRE is high.  So this leads to choosing what value we want to use for the RC (R9 and C14).  I typically size it so that t=RC=1.5P, where P is the period (in seconds) for 1 RF cycle at the intended operating frequency.  Example, the DRSSTC-1 operates near 60khz, so 1 cycle is 16.67uS, so I would want an RC of about 25uS (whereas I use 22uS).  The important thing is that PRE does not go LOW before the flip flop does its synchronization.  You must allow for at least 1 full cycle of operation after the interrupter has gone LOW for the flip flop to act.  To be on the safe side, you could size the RC to be 3*P.
+
+\section{Limiter}
+
+The limiter prevents overcurrent in the coil rig. By disabling the interrupter when the peak current rises above a preset level. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R1, and C1 is a noise filter. The recifier is fed by a feedback transformer connectet to the primary resonant circuit. The rectified signal is fed into a comparator, the other input of the comparator is connected to a potentiometer. R2 is to set the highest level the potentiometer can be set to. R3 is to pull the input of the comparator low in the case that the potentiometer is disconnected.
+
+If the voltage of the rectified feedback signal over R1 is higher than the voltage set by the potentiometer the output of the comparator goes low and resets the latch. The data input of the latch is connected to VCC, on the next positive flank of the interrupt signal X2 the data will be clocked to the output and the output will go high.
+
+The output of the latch is connected to the interrupter. A low signal stops the output of the interrupter. A high signal allows the interrupt signal X2 to control the output.
+
+
+%%%%%% Stikkord
+%The output from the rectifiers is then again loaded down with 100 ohms.  This 100 ohms is to keep the impedance at the comparator (U6) input low, making it somewhat noise immune.  This technique works very well, and without the 100 ohm resistor in place, I find the circuit will falsely trigger on noise.  C15 provides extra noise filtering.
+
+\section{Bridge inverter}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Skjema/TK531_Utgangstrinn_r.pdf}
+    \caption{Caption}
+    \label{fig:tk531}
+\end{figure}
+
+The final output stage is a full bridge inverter using IGBTs, IGBTs are chosen over MOSFETs due to IGBTs having lower forward voltage drop at higher voltages and currents. The 1N4744A diodes (15V Zener) is there to clamp the gate voltage to protect the gate of the IGBT from over voltage. The 10 Ohm resistors is to protect from overcurrent. The 1V5KE400A schottky diodes are to protect the IGBTs from reverse voltage transients. The 15ETX06 diodes are there to recycle the leftover energy into the bus capacitors when we have stopped switching, as IGBTs does not conduct reverse current. L3 is the current sense feedback transformer, L1 and C1 is the primary resonant circuit. T1 and T2 are gate drive transformers. The supply voltage VCC\_HVDC is 160VDC.
+
+%%%%%%% Stikkord
+%the anti-parallel diodes in the IGBT recycles the leftover energy into the main bus capacitors as the current rings down.
+
+\section{Resonant circuit}
+
+The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit.
+
+%%%%%%%%%%%%% Stikkord
+% Løs kobling mellom primær og sekundær for å ikke laste primærkretsen for mye.
+% Må tune primær til samme frekvens som sekundær
+% Sekundær bestemmer frekvensen.
+% Q verdi?
