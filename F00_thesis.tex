@@ -73,7 +73,7 @@
 
 %Bibliography
 %\usepackage{url}
-\usepackage{natbib}%\usepackage[sectionbib]{natbib}
+\usepackage[]{natbib}%\usepackage[sectionbib]{natbib}
 \usepackage{chapterbib}
 %\bibpunct[:]{(}{)}{;}{a}{}{,} %citation structure
 \bibpunct{(}{)}{,}{a}{}{;} 
@@ -190,11 +190,11 @@
 \def\dispsymbol#1{\csname myarray(#1)\endcsname} 
 
 %Titles
-\title{Title of the Thesis}
+\title{Design parameters influence on spark length and tone quality in a musical dual resonant solid state tesla coil}
 %\subtitle{Subtitle of the thesis here}
-\author{John Doe}
+\author{Øystein Smith}
 
-\def \thesisAuthor{John Doe}
+\def \thesisAuthor{Øystein Smith}
 
 %\degreetype{PhD}
 \faculty{Faculty of Engineering Science and Technology Updated}
@@ -203,8 +203,8 @@
 \isbnprinted{}
 \isbnelectronic{}
 \serialnumber{}
-\setyear{2014}
-\setmonth{September}
+\setyear{2017}
+\setmonth{June}
 
 \begin{document}
 
@@ -257,14 +257,49 @@
 %\input{F05-acknowledgements}
 %
 %Chapters
+%Introduksjon
 \input{src/introduction}
-\input{src/DRSSTC}
-\input{src/DRSSTC_detalj}
+%Beskrivelse av Tesla Coil / DRSSTC
+\input{src/teslacoil}
+%Tidligere arbeid
+\input{src/earlier}
+%Teori?
+\input{src/theory}
 \input{src/audio}
+%Beskrivelse av arkitektur (Blokkoppbygning)
+\input{src/DRSSTC}
+%Inngående beskrivelse av kretsene (inkludert designvalg)
+\input{src/DRSSTC_detalj}
+%Inngående beskrivelse av signaler i kretsene
+\input{src/DRSSTC_signals}
+%Matematisk beskrivelse av så mye som mulig av kretsen(e)
 \input{src/model}
+%Målebeskrivelse
 \input{src/methodology}
+%Måleresultater
+\input{src/results}
+%Diskusjon
+\input{src/discussion}
+%Konklusjon
+\input{src/conclusion}
+%Videre arbeid
+\input{src/further}
 
-%\input{conclusion}
+%Inngående beskrivelse, analyse og dokumentasjon av en DRSSTC implementasjon.
+
+%Introduksjon
+%Beskrivelse av Tesla Coil / DRSSTC
+%Tidligere arbeid
+%Teori?
+%Beskrivelse av arkitektur (Blokkoppbygning)
+%Inngående beskrivelse av kretsene (inkludert designvalg)
+%Inngående beskrivelse av signaler i kretsene
+%Matematisk beskrivelse av så mye som mulig av kretsen(e)
+%Målebeskrivelse
+%Måleresultater
+%Diskusjon
+%Konklusjon
+%Videre arbeid
 
 
 \newpage

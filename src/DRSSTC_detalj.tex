@@ -1,13 +1,16 @@
+\section{Pulse shaper}
+The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTS, in addition to not letting harmful signals through.
+
 \section{Interrupter}
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{Skjema/FunksjonsBlokkskjema.pdf}
     \caption{Block diagram}
     \label{fig:block}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[trim={6.5cm 5cm 7cm 5.5cm},clip,width=\textwidth]{Skjema/TK514_Interrupter.pdf}
     \caption{Interrupter (TK514)}
@@ -36,6 +39,13 @@ D3-D6 are protection diodes which clamp the feedback signal to safe voltages. Th
 
 \section{Limiter}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Skjema/Limiter.pdf}
+    \caption{Limiter}
+    \label{fig:my_label}
+\end{figure}
+
 The limiter prevents overcurrent in the coil rig. By disabling the interrupter when the peak current rises above a preset level. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R1, and C1 is a noise filter. The recifier is fed by a feedback transformer connectet to the primary resonant circuit. The rectified signal is fed into a comparator, the other input of the comparator is connected to a potentiometer. R2 is to set the highest level the potentiometer can be set to. R3 is to pull the input of the comparator low in the case that the potentiometer is disconnected.
 
 If the voltage of the rectified feedback signal over R1 is higher than the voltage set by the potentiometer the output of the comparator goes low and resets the latch. The data input of the latch is connected to VCC, on the next positive flank of the interrupt signal X2 the data will be clocked to the output and the output will go high.
@@ -48,7 +58,7 @@ The output of the latch is connected to the interrupter. A low signal stops the 
 
 \section{Bridge inverter}
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{Skjema/TK531_Utgangstrinn_r.pdf}
     \caption{Caption}
@@ -62,7 +72,7 @@ The final output stage is a full bridge inverter using IGBTs, IGBTs are chosen o
 
 \section{Resonant circuit}
 
-The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit.
+The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit is zero the polarity switches and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level a streamer forms from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the streamer continues to grow for a couple of cycles.
 
 %%%%%%%%%%%%% Stikkord
 % Løs kobling mellom primær og sekundær for å ikke laste primærkretsen for mye.
