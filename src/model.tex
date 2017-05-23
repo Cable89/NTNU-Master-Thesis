@@ -1,8 +1,15 @@
 \chapter{Mathematical model}
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{img/Simulink_transfer.pdf}
+    \caption{Block diagram}
+    \label{fig:spolerigg3}
+\end{figure}
+
 \section{Transfer function for coil rig}
 
-The schematic shown in \cref{fig:spolerigg1} is the schematic for the coil rig, note R1, R2, and G1 in addition to C1, C2, L1, and L2. R1 is the resistance in the primary circuit (mainly the cable from the driver to the coil rig), R2 is the resistance in the secondary circuit (mainly the resistance in L2). G1 is the electrical arc modelled as a conductance, see \cref{eq:g1} for the model of G1, this model is a combination of Cassie \citep{cassie} and Mayr \citep{mayr} models for electrical arcs presented in \citep{575670}. $U_p$ is the voltage output from the driver to the primary resonant circuit, $U_s$ is the voltage output from the secondary resonant circuit (the voltage driving the electrical arc).
+The schematic shown in \cref{fig:spolerigg1} is the schematic for the coil rig. R1 is the resistance in the primary circuit (mainly the cable from the driver to the coil rig), R2 is the resistance in the secondary circuit (mainly the resistance in L2). C1 is the primary capacitor, L1 is the primary coil, L2 is the secondary coil, and C2 is the secondary capacitance (or top load). G1 is the electrical arc modelled as a conductance, see \cref{eq:g1} for the model of G1, this model is a combination of Cassie \citep{cassie} and Mayr \citep{mayr} models for electrical arcs presented in \citep{575670}. $U_p$ is the voltage output from the driver to the primary resonant circuit, $U_s$ is the voltage output from the secondary resonant circuit (the voltage driving the electrical arc).
 
 \begin{figure}[h!]
     \centering
@@ -88,24 +95,38 @@ Then we have the transfer function of the resonant circuit (shown in \cref{eq:3}
 %    H(s) = \frac{s^2 M C_1}{s^4(2 M L_1 C_2 C_1 - L_1 L_2 C_2 C_1) + s^3(2 M R_1 C_2 C_1 - L_2 R_1 C_2 C_1 + 2 M L_1 G_1 C_1 - L_1 R_2 C_2 C_1) + s^2(2 M R_1 G_1 C_1 - R_1 R_2 C_2 C_1 + 2 M C_2 - C_2 L_2 - L_1 R_2 G_1 C_1 - L_1 C_1 + 2 M C_1) + s(2 M G_1 - R_1 R_2 G_1 C_1 - R_1 C_1 - L_2 G_1) - R_2 G_1- 1}
 %\end{equation}
 
+\newpage
+
 \begin{equation} \label{eq:4}
-    H(s) = \frac{s^2 M C_1}{s^4 a + s^3 b + s^2 c + s d - R_2 G_1- 1}
+    H(s) = \frac{s^3 f + s^2 g}{s^4 a + s^3 b + s^2 c + s d + e}
 \end{equation}
 
 \begin{equation} \label{eq:4_1}
-    a = 2 M L_1 C_2 C_1 - L_1 L_2 C_2 C_1
+    a = (C_1 C_2 G_1 L_1 L_2)-2 (C_1 C_2 G_1 L_1 M)+(C_1 C_2 G_1 M^2)
 \end{equation}
 
 \begin{equation} \label{eq:4_2}
-    b = 2 M R_1 C_2 C_1 - L_2 R_1 C_2 C_1 + 2 M L_1 G_1 C_1 - L_1 R_2 C_2 C_1
+    b = (C_1 C_2 G_1 L_1 R_2)+(C_1 C_2 G_1 L_2 R_1)-2 (C_1 C_2 G_1 M R_1)+(C_1 C_2 L_1)
 \end{equation}
 
 \begin{equation} \label{eq:4_3}
-    c = 2 M R_1 G_1 C_1 - R_1 R_2 C_2 C_1 + 2 M C_2 - C_2 L_2 - L_1 R_2 G_1 C_1 - L_1 C_1 + 2 M C_1
+    c = (C_1 C_2 G_1 R_1 R_2)+(C_1 C_2 R_1)+(C_1 G_1 L_1)+(C_2 G_1 L_2)-2 (C_2 G_1 M)
 \end{equation}
 
 \begin{equation} \label{eq:4_4}
-    d = 2 M G_1 - R_1 R_2 G_1 C_1 - R_1 C_1 - L_2 G_1
+    d = (C_1 G_1 R_1)+(C_2 G_1 R_2)+C_2
+\end{equation}
+
+\begin{equation} \label{eq:4_5}
+    e = G_1
+\end{equation}
+
+\begin{equation} \label{eq:4_6}
+    f = C_1 C_2 M
+\end{equation}
+
+\begin{equation} \label{eq:4_7}
+    g = C_1 G_1 M
 \end{equation}
 
 Sizes for the parameters in the transfer function is shown in \cref{tab:mod_params} these sizes are rounded approximate sizes for a DRSSTC.
@@ -113,7 +134,7 @@ Sizes for the parameters in the transfer function is shown in \cref{tab:mod_para
 \begin{table}[]
     \centering
     \begin{tabular}{c|c|c|c}
-         & Comment &  &\\
+         & Comment &  &\\ \hline
         C1 & Primary load capacitor                 & $10^{-7}$ & F \\
         C2 & Secondary load capacitor (top load)    & $10^{-11}$& F \\
         L1 & Primary coil                           & $10^{-5}$ & H \\
@@ -122,18 +143,18 @@ Sizes for the parameters in the transfer function is shown in \cref{tab:mod_para
         R1 & Primary circuit ohmic resistance       & $10^{1}$  & $\Omega$ \\
         R2 & Secondary circuit ohmic resistance     & $10^{2}$  & $\Omega$ \\
         G1 & Resistance of elecrical arc            & $10^{2}$  & $\Omega$ \\ % Usikker!
-        k  & Coupling factor                        & $10^{-1}$ &
+        k  & Coupling factor                        & $10^{-1}$ & 
     \end{tabular}
-    \caption{Model parameters}
+    \caption{Model parameter sizes}
     \label{tab:mod_params}
 \end{table}
 
-\subsection{Magnitude analysis}
-By taking the magnitudes for each variable listed in \cref{tab:mod_params} and inserting them into the different terms in the transfer function $H(s)$ we can see wich terms influence the result and wich terms are insignificant.
+\todo{Forklare hvorfor disse størrelsene}
 
+\newpage
 \subsection{Plots}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_M.eps}
     \caption{Bode plot for different values of M}
@@ -155,6 +176,17 @@ M is in the range 1e-3 to 1e-7.
     \label{fig:my_label}
 \end{figure}
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/Simulation.eps}
+    \caption{Linear simulation of transfer function with square wave with $f=f_0$ as input}
+    \label{fig:my_label}
+\end{figure}
+
+\subsection{Magnitude analysis}
+By taking the magnitudes for each variable listed in \cref{tab:mod_params} and inserting them into the different terms in the transfer function $H(s)$ we can see wich terms influence the result and wich terms are insignificant.
+
 \subsection{Arc}
 The arc is modeled as a conductance.
 \begin{equation} \label{eq:g1}
@@ -165,16 +197,16 @@ The arc is modeled as a conductance.
     \theta = \theta_0 + \theta_1 exp(-\alpha |i|)
 \end{equation}
 
-\begin{table}[]
+\begin{table}[h]
     \centering
     \begin{tabular}{c|c|c|c}
-         & Comment &  &\\
+         & Comment &  &\\ \hline
         $\theta$  & Arc dampening factor &  &\\
         $G_{min}$ & Least possible conductance &  &\\
         $I_o$     & Limit between large and small current &  &\\
         $E_0$     & Constant, steasy state arc voltage &  &\\
         $P_0$     & Constant power loss from arc &  & \\
-        $i_{G1}$ & Current flowing in arc      &  & \\
+        $i_{G1}$  & Current flowing in arc      &  & \\
         $u_s$     & Voltage over arc            &  &
     \end{tabular}
     \caption{Caption}

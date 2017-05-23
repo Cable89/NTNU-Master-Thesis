@@ -14,7 +14,7 @@
 % Set default values for the variables used by our implementation of \maketitle
 %
 \newcommand{\SubTitle}{}
-\newcommand{\DegreeType}{titulum obliviscens}
+\newcommand{\DegreeType}{Master of Technology}
 \newcommand{\Faculty}{ }
 \newcommand{\Department}{}
 \newcommand{\CopyrightNotice}{}
@@ -102,7 +102,7 @@
 	{\LARGE \SubTitle}
 	\vfill
 
-	{\large Doctoral thesis\\for the degree of \DegreeType
+	{\large Master thesis%\\for the degree of \DegreeType
 
 	Trondheim, \Month\ \Year
 
@@ -122,7 +122,7 @@
 
 	Norwegian University of Science and Technology
 
-	Doctoral thesis\\
+	Master thesis\\
 	for the degree of \DegreeType
 
 	\Faculty\ \\
@@ -134,7 +134,7 @@
 	ISBN \ISBNElectronic\ (electronic version)\\
 	ISSN 1503-8181
 
-	Doctoral theses at NTNU, \SerialNumber
+	Master theses at NTNU, \SerialNumber
 
 	Printed by NTNU-trykk
 	}

@@ -1,8 +1,3 @@
-\section{Pulse shaper}
-The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTS, in addition to not letting harmful signals through.
-
-\section{Interrupter}
-
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{Skjema/FunksjonsBlokkskjema.pdf}
@@ -10,9 +5,15 @@ The purpose of the pulse shaper is to take the input signal and transform it to 
     \label{fig:block}
 \end{figure}
 
+\newpage
+\section{Pulse shaper}
+The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTS, in addition to not letting harmful signals through.
+
+\section{Interrupter}
+
 \begin{figure}[h!]
     \centering
-    \includegraphics[trim={6.5cm 5cm 7cm 5.5cm},clip,width=\textwidth]{Skjema/TK514_Interrupter.pdf}
+    \includegraphics[width=\textwidth]{Skjema/TK514_Interrupter.pdf}
     \caption{Interrupter (TK514)}
     \label{fig:interrupter}
 \end{figure}
@@ -37,11 +38,12 @@ D3-D6 are protection diodes which clamp the feedback signal to safe voltages. Th
 
 %There are some tricks used to make the JK flip flop (U2) to operate properly in the circuit.  As shown when the interrupter goes HI, CLR\ is LOW.  This puts Q\ in a HI state.  Now, we see that there is a inverter (part of U1) that feeds from the interrupter signal, with its output feeding into an RC circuit and then another inverter.  What this does is delay the HI input to the PRE on the flip flop.  Note that before the PRE is HI, the output from the flip flop is whatever present on CLR\.  If we did not delay the input to PRE, then our interrupter pulse would never be passed along to the gate driver ENABLE (pin 3 on the UCC3732X).  Also note that the flip flop only does its synchronized shut down when PRE is high.  So this leads to choosing what value we want to use for the RC (R9 and C14).  I typically size it so that t=RC=1.5P, where P is the period (in seconds) for 1 RF cycle at the intended operating frequency.  Example, the DRSSTC-1 operates near 60khz, so 1 cycle is 16.67uS, so I would want an RC of about 25uS (whereas I use 22uS).  The important thing is that PRE does not go LOW before the flip flop does its synchronization.  You must allow for at least 1 full cycle of operation after the interrupter has gone LOW for the flip flop to act.  To be on the safe side, you could size the RC to be 3*P.
 
+\newpage
 \section{Limiter}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Skjema/Limiter.pdf}
+    \includegraphics[width=\textwidth]{Skjema/TK513_Limiter.pdf}
     \caption{Limiter}
     \label{fig:my_label}
 \end{figure}
@@ -56,11 +58,12 @@ The output of the latch is connected to the interrupter. A low signal stops the 
 %%%%%% Stikkord
 %The output from the rectifiers is then again loaded down with 100 ohms.  This 100 ohms is to keep the impedance at the comparator (U6) input low, making it somewhat noise immune.  This technique works very well, and without the 100 ohm resistor in place, I find the circuit will falsely trigger on noise.  C15 provides extra noise filtering.
 
+\newpage
 \section{Bridge inverter}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Skjema/TK531_Utgangstrinn_r.pdf}
+    \includegraphics[width=\textwidth]{Skjema/TK531_Utgangstrinn.pdf}
     \caption{Caption}
     \label{fig:tk531}
 \end{figure}
@@ -70,7 +73,15 @@ The final output stage is a full bridge inverter using IGBTs, IGBTs are chosen o
 %%%%%%% Stikkord
 %the anti-parallel diodes in the IGBT recycles the leftover energy into the main bus capacitors as the current rings down.
 
+\newpage
 \section{Resonant circuit}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Skjema/Spolerigg1.pdf}
+    \caption{Resonant circuit}
+    \label{fig:spolerigg1}
+\end{figure}
 
 The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit is zero the polarity switches and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level a streamer forms from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the streamer continues to grow for a couple of cycles.
 
@@ -79,3 +90,5 @@ The resonant circuits step up the voltage from 160VDC to a voltage high enough t
 % Må tune primær til samme frekvens som sekundær
 % Sekundær bestemmer frekvensen.
 % Q verdi?
+
+\newpage
