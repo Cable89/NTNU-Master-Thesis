@@ -55,7 +55,7 @@ Solve \cref{eq:1} for $I_1$
 
 Solve \cref{eq:2} for $I_1$
 \begin{equation} \label{eq:2_2}
-    I_2 = \frac{(Z_2 - Z_3 - Z_4) I_2}{Z_2}
+    I_1 = \frac{(Z_2 - Z_3 - Z_4) I_2}{Z_2}
 \end{equation}
 
 Set \cref{eq:1_2} equal to \cref{eq:2_2}, solve for $\frac{U_s}{U_p}$ and substitute in \cref{eq:3}
@@ -152,13 +152,23 @@ Sizes for the parameters in the transfer function is shown in \cref{tab:mod_para
 \todo{Forklare hvorfor disse størrelsene}
 
 \newpage
+\subsection{Transfer function for feedback}
+If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_p}$ we get the transfer function for the feedback signal.
+\begin{equation} \label{eq:fb}
+\frac{I_1}{U_p} = H_{FB}(s) = \frac{Z_2-Z_3-Z_4}{(Z_1+Z_2)(Z_2-Z_3-Z_4)-Z_2^2}
+\end{equation}
+
+
+\newpage
 \subsection{Plots}
+
+Shown in \cref{fig:bode} is the bode plot of the transfer function of the resonant circuit.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_M.eps}
     \caption{Bode plot for different values of M}
-    \label{fig:my_label}
+    \label{fig:bode}
 \end{figure}
 M is in the range 1e-3 to 1e-7.
 
@@ -181,6 +191,23 @@ M is in the range 1e-3 to 1e-7.
     \centering
     \includegraphics[width=\textwidth]{img/Simulation.eps}
     \caption{Linear simulation of transfer function with square wave with $f=f_0$ as input}
+    \label{fig:my_label}
+\end{figure}
+
+
+\subsubsection{Feedback Transfer function plots}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedbackBode.eps}
+    \caption{Bode plot of the transfer function for the feedback current}
+    \label{fig:my_label}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedbackResponse.eps}
+    \caption{Step and impulse response of transfer function for the feedback current}
     \label{fig:my_label}
 \end{figure}
 
