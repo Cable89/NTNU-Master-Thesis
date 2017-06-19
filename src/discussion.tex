@@ -1,2 +1,49 @@
 \chapter{Discussion}
 How does the theory and practice fit together, is this acceptable? good enough? Unless done in results
+
+%\begin{table}[]
+%    \centering
+%    \begin{tabular}{c|c|c}
+%        Parameter   & Description           & Influence \\
+%        1           & Input pulse length    & Spark length/Volume\\
+%        2           & Reset network filter  & \\
+%        3 ($f_c$)   & Limiter feedback filter limit frequency & \\
+%        4           & Limiter current sense range  & \\
+%        5           & Interrupter feedback Phase lead & \\
+%    \end{tabular}
+%    \caption{Parameters}
+%    \label{tab:my_label}
+%\end{table}
+%\todo{Hvor skal dette?}
+
+\section{Trigger pulse length}
+The input pulse length is the time the triggering signal X2 is active (high) for each period. See \cref{triggering_signal} for a description of the triggering signal X2. The longer the triggering signal is active the more cycles are driven into the resonant circuit as explained in \cref{sec:interrupter}. When more cycles are driven into the resonant circuit the voltage on the output rises exponentially as seen in \cref{fig:linsim}, with higher voltage on the output a longer streamer (spark) can be produced as explained in \cref{sec:arc}. The relation between the input pulse length and the output streamer length is \todo{Find the relation}.
+\todo{Relate to volume}
+
+\section{Interrupter feedback voltage level}
+\todo{Needs to be strong enough}
+
+\section{Interrupter feedback phase lead}
+The interrupter feedback phase lead is the phase lead introduced to the feedback voltage in the interrupter with relation to the current as described in \cref{sec:phaselead}. This gives a negative delay to compensate for the delay in the feedback loop from the current flowing in the primary circuit to the transistors driving the primary circuit. As we want to switch the transistors driving the primary circuit when the current flowing through them is as low as possible to give as low power dissipates in the transistors as possible and to be completely in phase with the step response which is ongoing in the resonant circuit to amplify the response as much as possible. 
+\todo{Add plot proving in phase is better}
+\todo{Calculate how much better}
+
+\section{Reset network filter}
+The reset network filter for the latch in the interrupter is explained in \cref{sec:reset_net}, this filter has no effect on spark length or tone quality as long as the feedback circuitry and synchronous shutdown works properly. But if the synchronous shutdown does not work properly. This filter should prevent or reduce noise from the interrupter not shutting down properly between each pulse on the input signal X2. This can also reduce the spark length if the spark is prevented from unintentionally continue longer than intended.
+\todo{Doesen't affect spark length, tone quality?}
+
+\section{Limiter feedback filter limit frequency}
+The limiter feedback filter is explained in \cref{sec:limiter}, and its limit frequency decides how much noise is allowed through to the comparator and thus how often the spark is shut down early unintentionally due to noise. The spark being shut down unintentionally generates noise on the acoustic signal.
+\todo{Affects noise on tone}
+\todo{What kind of noise}
+
+\section{Limiter feedback current sense range}
+The limiter feedback is explained in \cref{sec:limiter} and the range of current that can be sensed and compared to the preset level is critical to the maximum spark length attainable and the range of spark lengths attainable. And thus affects the volume and dynamic range of the acoustic signal.
+\todo{Affects volume range}
+
+\section{Resistance in resonant circuit}
+The resistance in the resonant circuit which is described in \cref{sec:resonant} affects the spark length. The resistance decides the Q value of the resonant circuit, and thus how much gain we get at resonance, and how distinct the resonance is.
+\todo{Affects spark length}
+\todo{Insert or reference plots}
+
+\section{}

@@ -7,26 +7,123 @@
 
 \newpage
 \section{Pulse shaper}
-The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through.
+\todo{Write this section}
+\todo{Include diagrams in text}
+The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver
+
+\cref{fig:drsstc1} to \cref{fig:drsstc6} shows different examples of input pulses, and corresponding output pulses. Note that the timings and frequencies are not to scale, only relative timings.
+
+\Cref{fig:drsstc1} shows a single pulse on the input signal $X1$, here we see $X2$ is limited to a certain width. We also see that $X4$ and $X8$ goes high when $X2$ goes high, oscillates at the resonance frequency of the resonance circuit, and goes low when $X2$ goes low.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 20H 18L\\
+        X2 & 5L 10H 28L\\
+        X3 & 43H \\
+        X4 & 5L 10{1C} 28L\\
+        X8 & 5L 10{1C} 28L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1}
+    \label{fig:drsstc1}
+\end{figure}{}
+
+\Cref{fig:drsstc2} shows the same principle, only with a longer pulse on $X1$.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 30H 8L\\
+        X2 & 5L 10H 28L\\
+        X3 & 43H \\
+        X4 & 5L 10{1C} 28L\\
+        X8 & 5L 10{1C} 28L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1, longer input pulse}
+    \label{fig:drsstc2}
+\end{figure}{}
+
+\Cref{fig:drsstc3} shows the same input signal as \cref{fig:drsstc2} but with a different setting of the on-time on the pulse limiter (allowing longer on-time).
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 30H 8L\\
+        X2 & 5L 20H 18L\\
+        X3 & 20H 23L\\
+        X4 & 5L 15{1C} 23L\\
+        X8 & 5L 15{1C} 23L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1, longer on time}
+    \label{fig:drsstc3}
+\end{figure}{}
+
+
+\Cref{fig:drsstc4} to \cref{fig:drsstc6} shows multiple pulses on $X1$ and corresponding signals on $X2$. With on-time set to 2 units and minimum time between pulses set to 12 units.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 10H 10L 10H 8L\\
+        X2 & 5L 2H 18L 2H 16L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc4}
+\end{figure}{}
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 10{4C}\\
+        X2 & 5L 2H 14L 2H 14L 2H 6L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc5}
+\end{figure}{}
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 8{5C}\\
+        X2 & 5L 2H 18L 2H 18L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc6}
+\end{figure}{}
 
 \section{Interrupter}
+\label{sec:interrupter}
 
-The interrupter generates the signal which drives the resonant circuit (coil rig) at its resonant frequency $f_0$. As long as the input signal X2 is high the output produces a square wave with fundamental frequency $f_0$. It does this by the means of a positive feedback loop. The feedback signal X8 is retrieved with a sensing transformer around the output wire from the power amplifier, before being clamped, rectified, and schmidt triggered. This results in a cleaned up normalized representation of X8, lets call this signal X8'. The positive flanks of X8' represents when the output current passes zero (this is when we want to switch the polarity of the output). X8' is fed to the output via gates controlled by a latch. One of the outputs is inverted (for push-pull operation). This circuit is shown in \cref{fig:interrupter}, U1A is the latch witch is central to the operation of the interrupter.
+The interrupter generates the signal which drives the resonant circuit (coil rig) at its resonant frequency $f_0$. As long as the input signal X2 is high the output produces a square wave with fundamental frequency $f_0$. It does this by the means of a positive feedback loop. The feedback signal X8 is retrieved with a sensing transformer around the output wire from the power amplifier, before being clamped, rectified, and schmidt triggered. This results in a cleaned up normalized representation of X8, lets call this signal X8'. The flanks of X8' represents when the output current passes zero (this is when we want to switch the polarity of the output). X8' is fed to the output via gates controlled by a latch. One of the outputs is inverted (for push-pull operation). This circuit is shown in \cref{fig:interrupter}, U1A is the latch witch is central to the operation of the interrupter. It has Four inputs SD, CP, D, and RD, wich are 'Set Data' (active low), 'Clock Pulse', 'Data', and 'Reset Data' (active low) respectively. And two outputs; Q wich is the normal output, and Q inverted wich is the inverted of Q at all times, Q inverted is unused in this circuit.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Skjema/TK514_Interrupter.pdf}
+    \includegraphics[width=0.9\textheight,angle=-90]{Skjema/TK514_Interrupter.pdf}
     \caption{Interrupter (TK514)}
     \label{fig:interrupter}
 \end{figure}
 
-Initially no current is flowing in the resonant circuit therefore no voltage is present on X8, but because of C1 the the input of U2A is undefined, let us look at the case of the output of U2A being high. Then pin 1 of U1A is low and pin 4 of U1B is high. And the clock input of the latch (U1A) is high. Reset is low. When X2 goes high the SD (Set Data) input of the latch U1A is activated, reset RD goes low, and the output Q goes high. Then X4B goes high and causes a step response in the resonant circuit. The feedback transformer is oriented such that this current direction gives a negative voltage on X8 and thus still low signal on the input of U2A. When the current direction changes the signal on the input of U2A goes from low to high and X4A goes high and X4B goes low. This reverses the voltage on the resonant circuit in phase with the step response and triggers an additional step response in phase with the already ongoing one. This cycle continues until X2 goes low. When X2 goes low SD goes low, but Q is still high until the next negative flank on X8 (inverted through U2A). When D (wich is strapped low) is clocked through the latch. and Q goes low and both X4A and X4B goes low. And no further energy is supplied to the resonant circuit and the step response completes. In the case of the initial value of the output of U2A being low X4\_A would go high first instead of X4\_B and X8 would go high right away. Prompting X4\_A and X4\_B to invert immediately and switch the output while the current is not zero. \todo{Analysere/Diskutere initialverdi på U2A}
+\newpage
+
+Initially no current is flowing in the resonant circuit therefore no voltage is present on X8, but because of C1 the the input of U2A is undefined, let us look at the case of the output of U2A being high and the input X2 being low. Then the initial values of the signals are as shown in \cref{fig:int_timing}, SD is high (inactive) CP is high, D is low, RD is low (active), Q is low, X4\_A and X4\_B is low.
 
 \begin{figure}[!ht]
     \centering
     \begin{tikztimingtable}
         X2      & 2L 19H 0.5H 10.5L\\
-        X8'     & 2L 1L 19.5{1C} N(A1) 4{1C} 6L\\
+        X8'     & 2H 1H 19.5{1C} N(A1) 4{1C} 6H\\
         SD      & 2H 19L 0.5L 10.5H\\
         CP      & 2H 1H 24{1C} 5H\\
         D       & 32L\\
@@ -41,41 +138,65 @@ Initially no current is flowing in the resonant circuit therefore no voltage is 
         \end{pgfonlayer}
     \end{tikztimingtable}
     \caption{Timing diagram for interrupter}
-    \label{fig:tones}
+    \label{fig:int_timing}
 \end{figure}{}
 
-The function of L1 and R2 is to introduce a phase lead on the voltage of X8 in relation of the current on X8. This is to that one can compensate for propagation delays in the circuit and for switching delays in the transistors in the bridge inverter. When the circuit is inductive the voltage will lead the current. By adjusting the value of R2 the relation between the inductance and resistance is changed and thus the phase angle is changed. Thus the time between when the voltage crosses zero and the current crosses zero can be adjusted. This time should theoretically be equal to the time it takes the feedback signal X8 to propagate through the logic and for the IGBT to turn on or off. So that we will switch when the current in the resonant circuit is zero (Zero current switching). This is to reduce energy lost from the resonant circuit and to minimize power burned in the transistors (when switching). From the datasheets we have the propagation delays $t_{pd}$ for the different devices in the propagation path shown in \cref{tab:tpd}. The there are two propagation paths one path contains one scmidth trigger (74HC14) more than the other, also the propagation delay in the mosfet drivers (MIC4422YM) differs for rising and falling outputs. The average propagation delay $t_{pd}$ from the input of U2A to the output of the mosfet drivers is then given by \cref{eq:tpd} and results in $t_{pd} =$ 58 ns typical and 137,5 ns maximum. In addition the delays from hysteresis in U2A $t_hysteresis$ and switching delays in the bridge inverter $t_{sw}$ should be added to the desired phase lead $t_{d}$. Resulting in the desired phase lead $t_{d}$ being given by \cref{eq:td}. The voltage of the feedback signal X8 should have sufficiently high voltage so that delays from hysteresis in U2A is neglible. Delays in the IGBT is read from the datasheet and presented in \cref{tab:tigbt} if we add the delay at 25 $^{\circ}C$ to the nominal $t_d$ and the delay at 150$^{\circ}C$ to the maximum $t_d$, we get a $t_d$ of 141 ns nominal and 258 ns maximum.
+When X2 goes high the Set Data (SD) input of the latch U1A goes low and is activated, Reset Data RD goes high (inactive), and thus the output Q goes high. This enables the and gates U3A and U3B and allows X8' to pass through, X4\_B goes high and X4\_A remains low, this causes a step response in the resonant circuit. The feedback transformer is oriented such that this current direction gives a negative voltage on X8 and thus still low signal on the input of U2A. When the current direction changes the signal on the input of U2A goes from low to high and X4A goes high and X4B goes low. This reverses the voltage on the resonant circuit in phase with the step response and triggers an additional step response in phase with the already ongoing one. This cycle continues until X2 goes low. When X2 goes low SD goes low (inactive), but Q is still high until the next negative flank on X8 (inverted through U2A). When D (wich is strapped low) is clocked through the latch, Q goes low and both X4\_A and X4\_B goes low. And no further energy is supplied to the resonant circuit and the step response completes. In the case of the initial value of the output of U2A being low X4\_A would go high first instead of X4\_B and X8 would go high right away. Prompting X4\_A and X4\_B to invert immediately and switch the output while the current is not zero. Then the rest of the events happen as explained above. \todo{Analysere/Diskutere initialverdi på U2A}
 
-Since there are no other resistances in the circuit than R2, as R1 is in series with both a capacitor and the input of the logic gate U2A and can be considered close to infinite in relation to R2, the phase angle is given by \cref{eq:theta}. And thus the desired phase lead is given by \cref{eq:tdl}, and the relation between L and R is given by \cref{eq:lr}. Given a $f_0$ of 110kHz and a desired $t_d$ of 141 ns nominal and 258 ns maximum we get $1,4 \cdot 10^{-7}$ nominal and $2,6 \cdot 10^{-7}$ maximum. The total impedance of L and R should give a sufficently high voltage so that the delay due to hysteresis in U2A is neglible, but not too high voltage for the zener diodes to handle. \todo{Selection of L and R?}
+\subsubsection{Phase Lead}
+\label{sec:phaselead}
+The function of L1 and R2 is to introduce a phase lead on the voltage of X8 in relation of the current on X8. The purpose of this is to compensate for propagation delays in the circuit and for switching delays in the transistors in the power amplifier. As the circuit is inductive, the voltage will lead the current. By adjusting the value of R2 the relation between the inductance and resistance is changed and thus the phase angle is changed. Thus the time between when the voltage crosses zero and the current crosses zero can be adjusted. This time should theoretically be equal to the time it takes the feedback signal X8 to propagate through the logic and for the transistors (IGBTs) in the power amplifier to turn on or off. So that we will switch when the current in the resonant circuit is zero (Zero current switching). This is to reduce energy lost from the resonant circuit and to minimize power burned in the transistors (when switching). From the datasheets we have the propagation delays $t_{pd}$ for the different devices in the propagation path shown in \cref{tab:tpd}. The there are two propagation paths one path contains one schmidt trigger (74HC14) more than the other, also the propagation delay in the mosfet drivers (MIC4422YM) differs for rising and falling outputs. The average propagation delay $\overline{t_{pd}}$ from X8 on the input of U2A to X5 on the output of the mosfet drivers is then given by \cref{eq:tpd} and results in $\overline{t_{pd}} =$ 58 ns typical and 137,5 ns maximum.
 
 \begin{equation} \label{eq:tpd}
-    t_{pd} = t_{pd74HC14} + \frac{t_{pd74HC14}}{2} + t_{pd74HC08} + \frac{t_{pdMIC4422YM Rising}+t_{pdMIC4422YM Falling}}{2}
+    \overline{t_{pd}} = t_{inv} + \frac{t_{inv}}{2} + t_{and} + \frac{t_{driv R}+t_{driv F}}{2}
 \end{equation}
+
+In addition the delays from hysteresis in U2A $t_h$ and switching delays in the transistors in the power amplifier $t_{sw}$ should be added to the desired phase lead $t_{d}$. Resulting in the desired phase lead $t_{d}$ being given by \cref{eq:td}.
 
 \begin{equation} \label{eq:td}
-    t_d = t_{hysteresis} + t_{pd} + t_{sw}
+    t_d = t_{h} + t_{pd} + t_{sw}
 \end{equation}
 
+The feedback signal X8 should have sufficiently high voltage so that delays from hysteresis $t_h$ in U2A is neglible. Delays in the IGBT is read from the datasheet and presented in \cref{tab:tigbt} if we add the delay at 25 $^{\circ}C$ to the nominal $t_d$ and the delay at 150$^{\circ}C$ to the maximum $t_d$, we get a $t_d$ of 141 ns nominal and 258 ns maximum.
+
+Since there are no other resistances in the circuit than R2, as R1 is in series with both a capacitor and the input of the logic gate U2A and can be considered close to infinite in relation to R2, the phase angle is given by \cref{eq:theta}.
+
 \begin{equation} \label{eq:theta}
-    \theta = {tan}^{-1}\frac{X_L}{R} = {tan}^{-1}\frac{\omega L}{R} = {tan}^{-1}\frac{2 \pi f_0 L}{R}
+    \theta = {\tan}^{-1}\frac{X_{L_1}}{R_2} = {\tan}^{-1}\frac{\omega L_1}{R_2} = {\tan}^{-1}\frac{2 \pi f_0 L_1}{R_2}
 \end{equation}
+
+And thus the desired phase lead is given by \cref{eq:tdl}, and the relation between $L_1$ and $R_2$ is given by \cref{eq:lr}.
 
 \begin{equation} \label{eq:tdl}
     t_{d} = \frac{\theta}{\omega} = \frac{\theta}{2 \pi f_0}
 \end{equation}
 
 \begin{equation} \label{eq:lr}
-    \frac{L}{R} = \frac{{tan}(\theta)}{\omega} = \frac{{tan}(\omega t_{d})}{\omega} = \frac{{tan}(2 \pi f_0 t_{d})}{2 \pi f_0}
+    \frac{L_1}{R_2} = \frac{\tan(\theta)}{\omega} = \frac{\tan(\omega t_{d})}{\omega} = \frac{\tan(2 \pi f_0 t_{d})}{2 \pi f_0}
 \end{equation}
+
+Given a $f_0$ of 110kHz and a desired $t_d$ of 141 ns nominal and 258 ns maximum we get $\frac{L}{R} = 1,4 \cdot 10^{-7}$ s nominal and $\frac{L}{R} = 2,6 \cdot 10^{-7}$ s maximum. The total magnitude $|Z_L|$ of the impedance $Z_{L}$ of $L_1$ and $R_2$ should give a sufficiently high voltage $U_{X8}$ so that the delay due to hysteresis in U2A is negligible, but not too high voltage for the zener diodes D3-D6 to handle. The equation for $|Z_L|$ is shown in \cref{eq:zl}. The relation between the voltage $U_{X8}$ over $R_2$ and $L_1$ is shown in \cref{eq:ux8}.
+
+\begin{equation} \label{eq:zl}
+    |Z_{L}| = \sqrt{{R_2}^2 + (2 \pi f_0 L_1)^2}
+\end{equation}
+
+Assuming X8 is sinusiodal 
+
+\begin{equation} \label{eq:ux8}
+    U_{X8} = |Z_L| I_{X6} \frac{n1}{n2}
+\end{equation}
+
+
 
 \begin{table}[]
     \centering
-    \begin{tabular}{c|c|c}
-        Device              & $t_{pd}$ Typ (ns)   & $t_pd$ Max (ns) \\
-        74HC14              & 12            & 25\\
-        74HC08              & 10            & 20\\
-        MIC4422YM Rising    & 20            & 80\\
-        MIC4422YM Falling   & 40            & 80
+    \begin{tabular}{c|c|c|c}
+                &   Device              & $t_{pd}$ Typ (ns)   & $t_{pd}$ Max (ns) \\
+        $t_{inv}$ &   74HC14              & 12            & 25\\
+        $t_{and}$ &   74HC08              & 10            & 20\\
+        $t_{driv R}$& MIC4422YM Rising    & 20            & 80\\
+        $t_{driv F}$& MIC4422YM Falling   & 40            & 80
     \end{tabular}
     \caption{Propagation delays for devices}
     \label{tab:tpd}
@@ -92,10 +213,15 @@ Since there are no other resistances in the circuit than R2, as R1 is in series 
     \label{tab:tigbt}
 \end{table}
 
-The function of the network connected to the reset (RD) of the latch (U1A) is to reset the latch after a delay in the case that a zero crossing is not detected on X8 after X2 goes low. When X2 goes high the input of U2D goes low immediately due to the capacitor C2 being discharged through D7, but when X2 goes low the capacitor C2 will be charged through R3 and there will be a delay before the latch is reset. The time constant $\tau$ of R3 C2 is 440 $\cdot 10^{-6} s$, the positive going threshold voltage of the schmitt trigger (74HC14) is $T^+ = 2,5V$. We know that a capacitor is charged to $0,5 \cdot VCC$ after $0,7 \tau$, thus the filter R3 C2 together with U2D introduces a delay of 308$\mu s$, or if we have a resonance frequency $f_0$ of 110 Hz a delay of about 34 periods $T = \fraq{1}{f_0}$.
+\subsubsection{Reset network}
+\label{sec:reset_net}
+The function of the network connected to the reset (RD) of the latch (U1A) is to reset the latch after a delay in the case that a zero crossing is not detected on X8 after X2 goes low. Note the inverting schmidth triggers U2C and U2D on both sides of the network. When X2 goes high the input of U2D goes low immediately due to the capacitor C2 being discharged through D7, but when X2 goes low the capacitor C2 will be charged through R3 and there will be a delay before the latch is reset. The time constant of R3 C2 is $\tau = 440 \cdot 10^{-6} s$, the positive going threshold voltage of the inverting schmitt trigger (74HC14) is $T^+ = 2,5V$ Wich is half of the supply voltage VCC\_P5V0. We know that a capacitor is charged to $0,5 \cdot$ VCC (where VCC is the applied voltage) after $0,7 \tau$, thus the filter R3 C2 together with U2D introduces a delay of $0,7 \tau = 308\mu s$, or if we have a resonance frequency $f_0$ of 110 kHz a delay of about 3,4 periods $T = \frac{1}{f_0}$.
 
+\subsubsection{Input clamping and protection}
 D3-D6 are protection diodes which clamp the feedback signal to safe voltages. The network L1 and R2 introduces a tunable phase lead on the voltage. C1 and R1 is a filter to remove noise. D1 and D2 clamps the voltage to 0-5V.
 
+\subsection{IGBT Drivers}
+U5A and U6A are transistor drivers wich amplify X4 and step up the voltage from 5V to 18V
 
 %%%%%%% Stikkord
 %The output of T1 is loaded with a pair of zener diodes with ultrafast diodes to block the slow recovery of the zeners (they are not allowed to be forward biased).  Since the transformer ratio is ~1:1000, by normal transformer action, the current should be 1/1000th of the primary current, and the voltage should be 1000X greater.
@@ -108,41 +234,77 @@ D3-D6 are protection diodes which clamp the feedback signal to safe voltages. Th
 
 \newpage
 \section{Limiter}
+\label{sec:limiter}
+
+The limiter prevents overcurrent in the coil rig by disabling the interrupter when the peak current rises above a preset level. The limiter is shown in \cref{fig:limiter}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{Skjema/TK513_Limiter.pdf}
     \caption{Limiter}
-    \label{fig:my_label}
+    \label{fig:limiter}
 \end{figure}
 
-The limiter prevents overcurrent in the coil rig. By disabling the interrupter when the peak current rises above a preset level. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R1, and C1 is a noise filter. The recifier is fed by a feedback transformer connectet to the primary resonant circuit. The rectified signal is fed into a comparator, the other input of the comparator is connected to a potentiometer. R2 is to set the highest level the potentiometer can be set to. R3 is to pull the input of the comparator low in the case that the potentiometer is disconnected.
+The feedback signal is retrieved from the primary resonant circuit via the feedback transformer L4. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R2 and C3, R2 and C3 also functions as a noise filter with a limit frequency $f_c$ of 16MHz given by \cref{eq:fc}.
 
-If the voltage of the rectified feedback signal over R1 is higher than the voltage set by the potentiometer the output of the comparator goes low and resets the latch. The data input of the latch is connected to VCC, on the next positive flank of the interrupt signal X2 the data will be clocked to the output and the output will go high.
+\begin{equation} \label{eq:fc}
+    f_c = \frac{1}{2 \pi R_2 C_3}
+\end{equation}
 
-The output of the latch is connected to the interrupter. A low signal stops the output of the interrupter. A high signal allows the interrupt signal X2 to control the output.
+The rectified signal is fed into a comparator, the other input of the comparator is connected to a variable voltage controlled by a potentiometer. R3 is to set the highest level the variable voltage can be set to. R4 is to pull the input of the comparator low in the case that the potentiometer is disconnected.
+
+The relation between the (peak) current in the primary resonance circuit and the (peak) voltage on the input of the comparator is given by \cref{eq:limittrans}.
+
+\begin{equation} \label{eq:limittrans}
+    \frac{U_{X9'}}{I_{X6}} = \frac{n_1}{n_2} \cdot \frac{R_2}{\sqrt{1+(2 \pi 2 f R_2 C_3)^2}}
+\end{equation}
+
+\todo{Check equation}
+
+Where $\frac{n_1}{n_2}$ is the winding ratio of the feedback transformer, $I_{X6}$ is the current running in the primary resonance circuit, f is the frequency of $I_{X6}$ (half the frequency of the signal on the input of the comparator because of the full bridge rectifier). Given $n_1 = 1$, $n_2 = 100$, $R_2 = 10\Omega$, $C_3 = 1$nF, f = 110kHz, we get 0,1 Volts per Ampere.
+
+If the voltage of the rectified feedback signal over R2 is higher than the voltage set by the potentiometer the output of the comparator goes low and resets the latch. The data input of the latch is connected to VCC, on the next positive flank of the interrupt signal X2 the data will be clocked to the output and the output will go high.
+
+R5 is to give the possibility to tune the resistance of R2 by removing R2 from the PCB and mounting R5 instead, R5 then replaces R2 in the calculations above.
+
+The output of the latch X3 is connected to the interrupter, as explained in \cref{sec:interrupter}. A low signal stops the output of the interrupter. A high signal allows the interrupt signal X2 to control the output.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/LimiterTransfer.eps}
+    \caption{I=50A}
+    \label{fig:limitertransfer}
+\end{figure}
 
 
 %%%%%% Stikkord
 %The output from the rectifiers is then again loaded down with 100 ohms.  This 100 ohms is to keep the impedance at the comparator (U6) input low, making it somewhat noise immune.  This technique works very well, and without the 100 ohm resistor in place, I find the circuit will falsely trigger on noise.  C15 provides extra noise filtering.
 
+
 \newpage
-\section{Bridge inverter}
+\section{Power Amplifier}
+
+The purpose of the power amplifier is to amplify the signal coming from the interrupter X5 and drive the resonant circuit with a high voltage VCC\_HVDC. The power amplifier is shown in \cref{fig:tk531}, note that the feedback transformer L4, as well as the secondary resonant circuit L2 and C2 is not shown for simplicity. The feedback transformer L3 is included in the figure.
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Skjema/TK531_Utgangstrinn.pdf}
-    \caption{Caption}
+    \includegraphics[width=0.9\textheight,angle=-90]{Skjema/TK531_Utgangstrinn_r.pdf}
+    \caption{Power Amplifier}
     \label{fig:tk531}
 \end{figure}
 
-The final output stage is a full bridge inverter using IGBTs, IGBTs are chosen over MOSFETs due to IGBTs having lower forward voltage drop at higher voltages and currents. The 1N4744A diodes (15V Zener) is there to clamp the gate voltage to protect the gate of the IGBT from over voltage. The 10 Ohm resistors is to protect from overcurrent. The 1V5KE400A schottky diodes are to protect the IGBTs from reverse voltage transients. The 15ETX06 diodes are there to recycle the leftover energy into the bus capacitors when we have stopped switching, as IGBTs does not conduct reverse current. L3 is the current sense feedback transformer, L1 and C1 is the primary resonant circuit. T1 and T2 are gate drive transformers. The supply voltage VCC\_HVDC is 160VDC.
+The power amplifier is a full bridge inverter using Isolated Gate Bipolar Transistors (IGBTs), IGBTs are chosen over MOSFETs due to IGBTs having lower forward voltage drop at higher voltages and currents. The IGBTs are Q1 - Q4.The 1N4744A diodes (15V Zener) is there to clamp the gate voltage to protect the gate of the IGBT from over voltage. The 10 Ohm resistors is to protect from overcurrent. The 1V5KE400A schottky diodes are to protect the IGBTs from reverse voltage transients. The 15ETX06 diodes are there to recycle the leftover energy into the bus capacitors in the power supply when we have stopped switching, as IGBTs does not conduct reverse current. L3 is the current sense feedback transformer, L1 and C1 is the primary resonant circuit. T1 and T2 are gate drive transformers. The supply voltage VCC\_HVDC is 160VDC.
+
+\subsection{Gate drive transformers}
+T1 and T2 are gate drive transformers, the purpose of the gate drive transformers is to isolate the low voltages in the interrupter from the higher voltages in the power amplifier, as well as to switch the phase for half of X5 the signal driving the transistors.
 
 %%%%%%% Stikkord
 %the anti-parallel diodes in the IGBT recycles the leftover energy into the main bus capacitors as the current rings down.
 
 \newpage
 \section{Resonant circuit}
+\label{sec:resonant}
 
 \begin{figure}[h!]
     \centering
@@ -151,7 +313,7 @@ The final output stage is a full bridge inverter using IGBTs, IGBTs are chosen o
     \label{fig:spolerigg1}
 \end{figure}
 
-The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit is zero the polarity switches and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level a streamer forms from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the streamer continues to grow for a couple of cycles.
+The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit passes zero the polarity switches, as explained in \cref{sec:interrupter}, and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level a streamer forms from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the streamer continues to grow for a couple of cycles.
 
 %%%%%%%%%%%%% Stikkord
 % Løs kobling mellom primær og sekundær for å ikke laste primærkretsen for mye.
