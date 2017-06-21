@@ -306,15 +306,19 @@ T1 and T2 are gate drive transformers, the purpose of the gate drive transformer
 \section{Resonant circuit}
 \label{sec:resonant}
 
+The resonant circuit 
+
+
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=\textwidth]{Skjema/Spolerigg1.pdf}
+    \includegraphics[width=\textwidth]{Skjema/Spolerigg1_r.pdf}
     \caption{Resonant circuit}
     \label{fig:spolerigg1}
 \end{figure}
 
-The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit passes zero the polarity switches, as explained in \cref{sec:interrupter}, and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level a streamer forms from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the streamer continues to grow for a couple of cycles.
+The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit passes zero the polarity switches, as explained in \cref{sec:interrupter}, and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level an electric discharge happens from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the electric discharge continues to grow for a couple of cycles.
 
+\todo{Mer utfyllende}
 %%%%%%%%%%%%% Stikkord
 % Løs kobling mellom primær og sekundær for å ikke laste primærkretsen for mye.
 % Må tune primær til samme frekvens som sekundær
