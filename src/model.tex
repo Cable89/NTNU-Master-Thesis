@@ -1,16 +1,7 @@
 \chapter{Mathematical model}
-
-In \cref{fig:simulink} a block diagram of the feedback loop in the interrupter is shown, 
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=\textwidth]{img/Simulink.pdf}
-    \caption{Block diagram}
-    \label{fig:simulink}
-\end{figure}
+\label{sec:math}
 
 
-\newpage
 \section{Transfer function for coil rig}
 
 The schematic shown in \cref{fig:spolerigg11} is the schematic for the coil rig.
@@ -64,30 +55,32 @@ We then solve these two equations for $I_1$. Set \cref{eq:1_2} equal to \cref{eq
     I_1 = \frac{(Z_2 - Z_3 - Z_4) I_2}{Z_2}
 \end{equation}
 
-Set \cref{eq:1_2} equal to \cref{eq:2_2}, solve for $\frac{U_{X7}}{U_{X6}}$ and substitute in \cref{eq:3}  We then have the transfer function $H(s)$ for the coil rig.
+We then have the transfer function $H(s)$ for the coil rig \cref{eq:4}.
 
 \begin{equation} \label{eq:4}
     \frac{U_{X7}}{U_{X6}} = H(s) = \frac{Z_2 \cdot Z_4}{Z_1 \cdot (Z_2 - Z_3 - Z_4) - Z_2 \cdot (Z_3 + Z_4))}
 \end{equation}
 
+where
+
 \begin{equation} \label{eq:4_1}
-    Z_1 = R_1 + \frac{1}{s C_1} + s L_1 - s M
+    Z_1 = R_1 + \frac{1}{s C_1} + s L_1 - s M,
 \end{equation}
 
 \begin{equation} \label{eq:4_2}
-    Z_2 = s M
+    Z_2 = s M,
 \end{equation}
 
 \begin{equation} \label{eq:4_3}
-    Z_3 = s L_2 - s M + R_2
+    Z_3 = s L_2 - s M + R_2,
 \end{equation}
 
 \begin{equation} \label{eq:4_4}
-    Z_4 = \frac{1}{s C_2} + \frac{1}{G_1}
+    Z_4 = \frac{1}{s C_2} + \frac{1}{G_1},
 \end{equation}
 
 \begin{equation} \label{eq:4_5}
-    M = k \sqrt{L_1 L_2}
+    M = k \sqrt{L_1 L_2}.
 \end{equation}
 
 %\begin{equation}
@@ -95,7 +88,7 @@ Set \cref{eq:1_2} equal to \cref{eq:2_2}, solve for $\frac{U_{X7}}{U_{X6}}$ and 
 %\end{equation}
 
 % (Z2*Z4)/(Z1*(Z2-Z3-Z4)-Z2*(Z3+Z4)), Z1=(R1+1/(s*C1)+s*L1-s*M), Z2=(s*M, Z3=(s*L2)-(s*M)+R2), Z4=(1/(s*C2))+(1/G1))
-Then we have the transfer function of the resonant circuit (shown in \cref{eq:3} through \cref{eq:3_5}), however to be able to analyze this transfer function we have to order it into standard form. Meaning isolating $s$,$s^2$,$s^3$ etc. and expanding the factors. This leads to \cref{eq:5}.
+However to be able to analyze this transfer function we have to order it into standard form. Meaning isolating $s$,$s^2$,$s^3$ etc. and expanding the factors. This leads to \cref{eq:5}.
 
 %\begin{equation}
 %    H(s) = \frac{s^2 M C_1}{s^4(2 M L_1 C_2 C_1 - L_1 L_2 C_2 C_1) + s^3(2 M R_1 C_2 C_1 - L_2 R_1 C_2 C_1 + 2 M L_1 G_1 C_1 - L_1 R_2 C_2 C_1) + s^2(2 M R_1 G_1 C_1 - R_1 R_2 C_2 C_1 + 2 M C_2 - C_2 L_2 - L_1 R_2 G_1 C_1 - L_1 C_1 + 2 M C_1) + s(2 M G_1 - R_1 R_2 G_1 C_1 - R_1 C_1 - L_2 G_1) - R_2 G_1- 1}
@@ -132,7 +125,7 @@ where
 \end{equation}
 and
 \begin{equation} \label{eq:5_7}
-    g = C_1 G_1 M
+    g = C_1 G_1 M.
 \end{equation}
 
 Orders of magnitude for the parameters in the transfer function is shown in \cref{tab:mod_params} these sizes are rounded approximate sizes for a DRSSTC.
@@ -157,7 +150,7 @@ Orders of magnitude for the parameters in the transfer function is shown in \cre
 
 \todo{Forklare hvorfor disse størrelsene}
 
-Shown in \cref{fig:bode} is the bode plot of the transfer function $H(j\omega)$ of the resonant circuit with the orders of magnitude in \cref{tab:mod_params}.
+Shown in \cref{fig:bode} is the bode plot of the transfer function $H(j\omega)$ \cref{eq:5} of the resonant circuit with the orders of magnitude in \cref{tab:mod_params}.
 
 \begin{figure}[H]
     \centering
@@ -224,7 +217,8 @@ We see here that the output signal X6 starts with a quarter period of the step r
 
 \newpage
 \section{Transfer function for feedback}
-If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_{X6}}$ we get the transfer function for the feedback signal shown in \cref{eq:fb_1} to \cref{eq:fb_q}. Where $Z_1$ to $Z_4$ are the same impedances as given in \cref{eq:3_1}.
+\label{sec:mod_fb}
+If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_{X6}}$ we get the transfer function for the feedback signal shown in \cref{eq:fb_1} to \cref{eq:fb_q}. Where $Z_1$ to $Z_4$ are the same impedances as given in \cref{eq:4}.
 
 \begin{equation} \label{eq:fb_1}
 \frac{I_1}{U_{X6}} = H_{FB}(s) = \frac{Z_2-Z_3-Z_4}{(Z_1+Z_2)(Z_2-Z_3-Z_4)-Z_2^2}

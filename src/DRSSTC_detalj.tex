@@ -7,101 +7,56 @@
 
 \newpage
 \section{Pulse shaper}
-\todo{Write this section}
-\todo{Include diagrams in text}
-The purpose of the pulse shaper is to take the input signal and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver
+\label{sec:pulseshaper}
+The purpose of the pulse shaper is to take the input signal $X1$ and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver. The first step in the pulse shaper is to transform the input signal $X1$ to two level as shown in \cref{fig:schmidt}. Then the triggering signal $X2$ is two level and contains two pieces of information from $X1$, the frequency $f_{X2}$ (tone) and the volume (intensity). \Cref{fig:x2detail} shows the signal X2.
 
-\cref{fig:drsstc1} to \cref{fig:drsstc6} shows different examples of input pulses, and corresponding output pulses. Note that the timings and frequencies are not to scale, only relative timings.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[x=16mm,
+       every edge/.style = {draw, Straight Barb-Straight Barb},
+every edge quotes/.style = {fill=white,font=\footnotesize}
+                    ]
+%\draw[thick,black, smooth,domain=9:101] plot (\x/10,1);
+\draw[thick] (0.5,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (5,0) -- (5,1) -- (6,1) -- (6,0) -- (7.6,0);
+\draw (0,0.5) node {$X2$}; %label
 
-\Cref{fig:drsstc1} shows a single pulse on the input signal $X1$, here we see $X2$ is limited to a certain width. We also see that $X4$ and $X8$ goes high when $X2$ goes high, oscillates at the resonance frequency of the resonance circuit, and goes low when $X2$ goes low.
+\foreach \x in {1, 2, 5, 6}
+    \draw[dashed]  (\x,-0.8) -- ++ (0,1.0);
 
-\begin{figure}[!ht]
-    \centering
-    \scalebox{0.8}{
-    \begin{tikztimingtable}
-        X1 & 5L 20H 18L\\
-        X2 & 5L 10H 28L\\
-        X3 & 43H \\
-        X4 & 5L 10{1C} 28L\\
-        X8 & 5L 10{1C} 28L\\
-    \end{tikztimingtable}
-    }
-    \caption{One pulse on X1}
-    \label{fig:drsstc1}
+\draw   (1.0,-0.3) edge ["$T_H$"] ++ (1,0)
+        (5.0,-0.3) edge ["$T_H$"] ++ (1,0)
+        (1.0,-0.6) edge ["$T_P$"] ++ (4,0);
+    \end{tikzpicture}
+    \caption{Detail view of signal $X2$}
+    \label{fig:x2detail}
 \end{figure}{}
 
-\Cref{fig:drsstc2} shows the same principle, only with a longer pulse on $X1$.
+Where the frequency $f_{X2}=\frac{1}{T_P}$ is given by the time $T_P$ between the positive flanks of the signal. This is the base harmonic of the acoustic tone heard at the output of the system. The volume is given by the duty cycle of the pulses witch is the relationship between the pulse being high $T_H$ and the total period $T_P$ of the pulse. \Cref{fig:tones} shows different tones,
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
-    \scalebox{0.8}{
     \begin{tikztimingtable}
-        X1 & 5L 30H 8L\\
-        X2 & 5L 10H 28L\\
-        X3 & 43H \\
-        X4 & 5L 10{1C} 28L\\
-        X8 & 5L 10{1C} 28L\\
+        X2 & 2L 1H 7L 1H 7L 1H 7L 1H 7L\\
+        X2 & 2L 1H 5L 1H 5L 1H 5L 1H 5L 1H 5L 1H 1L\\
     \end{tikztimingtable}
-    }
-    \caption{One pulse on X1, longer input pulse}
-    \label{fig:drsstc2}
+    \caption{Different tones}
+    \label{fig:tones}
 \end{figure}{}
 
-\Cref{fig:drsstc3} shows the same input signal as \cref{fig:drsstc2} but with a different setting of the on-time on the pulse limiter (allowing longer on-time).
+and \cref{fig:volumes} shows different volumes.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
     \centering
-    \scalebox{0.8}{
     \begin{tikztimingtable}
-        X1 & 5L 30H 8L\\
-        X2 & 5L 20H 18L\\
-        X3 & 20H 23L\\
-        X4 & 5L 15{1C} 23L\\
-        X8 & 5L 15{1C} 23L\\
+        X2 & 2L 1H 7L 1H 7L 1H 7L 1H 7L\\
+        X2 & 2L 3H 5L 3H 5L 3H 5L 3H 5L\\
     \end{tikztimingtable}
-    }
-    \caption{One pulse on X1, longer on time}
-    \label{fig:drsstc3}
+    \caption{Different volumes}
+    \label{fig:volumes}
 \end{figure}{}
 
-
-\Cref{fig:drsstc4} to \cref{fig:drsstc6} shows multiple pulses on $X1$ and corresponding signals on $X2$. With on-time set to 2 units and minimum time between pulses set to 12 units.
-
-\begin{figure}[!ht]
-    \centering
-    \scalebox{0.8}{
-    \begin{tikztimingtable}
-        X1 & 5L 10H 10L 10H 8L\\
-        X2 & 5L 2H 18L 2H 16L\\
-    \end{tikztimingtable}
-    }
-    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
-    \label{fig:drsstc4}
-\end{figure}{}
-
-\begin{figure}[!ht]
-    \centering
-    \scalebox{0.8}{
-    \begin{tikztimingtable}
-        X1 & 5L 10{4C}\\
-        X2 & 5L 2H 14L 2H 14L 2H 6L\\
-    \end{tikztimingtable}
-    }
-    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
-    \label{fig:drsstc5}
-\end{figure}{}
-
-\begin{figure}[!ht]
-    \centering
-    \scalebox{0.8}{
-    \begin{tikztimingtable}
-        X1 & 5L 8{5C}\\
-        X2 & 5L 2H 18L 2H 18L\\
-    \end{tikztimingtable}
-    }
-    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
-    \label{fig:drsstc6}
-\end{figure}{}
+We also need to prevent harmful signals, this is done by limiting the duty cycle of the pulses as well as limiting the frequencies allowed. The duty cycle of the pulses is limited by choosing a maximum time $T_H$ the pulse is allowed to be high, this time is independent of the frequency. This means the preset max duty cycle is dependent on the frequency of the pulse.
+Limiting the frequencies allowed is done by choosing a minimum time $T_P$ after a pulse goes high until the $X2$ is allowed to go high again.
 
 \section{Interrupter}
 \label{sec:interrupter}
@@ -175,16 +130,16 @@ And thus the desired phase lead is given by \cref{eq:tdl}, and the relation betw
     \frac{L_1}{R_2} = \frac{\tan(\theta)}{\omega} = \frac{\tan(\omega t_{d})}{\omega} = \frac{\tan(2 \pi f_0 t_{d})}{2 \pi f_0}
 \end{equation}
 
-Given a $f_0$ of 110kHz and a desired $t_d$ of 141 ns nominal and 258 ns maximum we get $\frac{L}{R} = 1,4 \cdot 10^{-7}$ s nominal and $\frac{L}{R} = 2,6 \cdot 10^{-7}$ s maximum. The total magnitude $|Z_L|$ of the impedance $Z_{L}$ of $L_1$ and $R_2$ should give a sufficiently high voltage $U_{X8}$ so that the delay due to hysteresis in U2A is negligible, but not too high voltage for the zener diodes D3-D6 to handle. The equation for $|Z_L|$ is shown in \cref{eq:zl}. The relation between the voltage $U_{X8}$ over $R_2$ and $L_1$ is shown in \cref{eq:ux8}.
+Given a $f_0$ of 110kHz and a desired $t_d$ of 141 ns nominal and 258 ns maximum we get $\frac{L}{R} = 1,4 \cdot 10^{-7}$ s nominal and $\frac{L}{R} = 2,6 \cdot 10^{-7}$ s maximum. The total magnitude $|Z_L|$ of the impedance $Z_{L}$ of $L_1$ and $R_2$ should give a sufficiently high voltage $U_{X8}$ so that the delay due to hysteresis in U2A is negligible, but not too high voltage for the zener diodes D3-D6 to handle. The equation for $|Z_L|$ is shown in \cref{eq:zl}.
 
 \begin{equation} \label{eq:zl}
     |Z_{L}| = \sqrt{{R_2}^2 + (2 \pi f_0 L_1)^2}
 \end{equation}
 
-Assuming X8 is sinusiodal 
+The relation between the peak voltage $|U_{X8}|$ over $R_2$ and $L_1$ is shown in \cref{eq:ux8} assuming X8 is sinusiodal.
 
 \begin{equation} \label{eq:ux8}
-    U_{X8} = |Z_L| I_{X6} \frac{n1}{n2}
+    |U_{X8}| = |Z_L| |I_{X6}| \frac{n1}{n2}
 \end{equation}
 
 
@@ -220,7 +175,7 @@ The function of the network connected to the reset (RD) of the latch (U1A) is to
 \subsubsection{Input clamping and protection}
 D3-D6 are protection diodes which clamp the feedback signal to safe voltages. The network L1 and R2 introduces a tunable phase lead on the voltage. C1 and R1 is a filter to remove noise. D1 and D2 clamps the voltage to 0-5V.
 
-\subsection{IGBT Drivers}
+\subsubsection{IGBT Drivers}
 U5A and U6A are transistor drivers wich amplify X4 and step up the voltage from 5V to 18V
 
 %%%%%%% Stikkord
@@ -306,17 +261,71 @@ T1 and T2 are gate drive transformers, the purpose of the gate drive transformer
 \section{Resonant circuit}
 \label{sec:resonant}
 
-The resonant circuit 
+The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit; $R_1$, $C_1$, $L1$, and the secondary resonant circuit; $L_2$, $R_2$, $C_2$, $G_1$. The resonant circuit is shown in \cref{fig:spolerigg1}.
 
-
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Skjema/Spolerigg1_r.pdf}
     \caption{Resonant circuit}
     \label{fig:spolerigg1}
 \end{figure}
 
-The resonant circuits step up the voltage from 160VDC to a voltage high enough to create electric arcs. The resonant circuit consists of two parts the primary resonant circuit, and the secondary resonant circuit. When the interrupter first applies a voltage to the primary resonant circuit the circuit repsonds with its step response, this is sinussoidal and whith a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit passes zero the polarity switches, as explained in \cref{sec:interrupter}, and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level an electric discharge happens from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the electric discharge continues to grow for a couple of cycles.
+The input signal to the resonant circuit $X6$ is the square wave output from the power amplifier. When the interrupter first applies a voltage to the primary resonant circuit through the power amplifier the circuit responds with its step response, this is sinusoidal and with a frequency equal to the resonant frequency. When the interrupter detects that the current in the primary resonant circuit passes zero the polarity switches, as explained in \cref{sec:interrupter}, and we get a new step response added to the already existing one. This continues for several cycles. This current is inductively coupled into the secondary resonant circuit, and when the voltage reaches a high enough level an electric discharge happens from the top load of the secondary resonant circuit, this drains energy from the secondary circuit, but the electric discharge continues to grow for a couple of cycles. The wave forms of the signals will be explained in \cref{sec:math}.
+
+The values and the physical shapes of the components in the resonant circuit are important to the operation of the tesla coil. The values of the components will be discussed in \cref{sec:math}.
+
+$L_1$ is the primary coil, and will have few turns and large area.
+
+\begin{equation} \label{eq:}
+    L_1 = \sqrt{(L_{1V}\cdot \sin (\theta))^2 + (L_{1H}\cdot \cos (\theta))^2}
+\end{equation}
+
+\begin{equation} \label{eq:}
+    L_{1V} = \frac{R^2 N^2}{9 \bar{r} + 10 h}, L_{1H} = \frac{R^2 N^2}{8 \bar{r} + 11 h}
+\end{equation}
+
+
+\begin{equation} \label{eq:}
+    \bar{r} = \frac{A}{2} + \frac{W}{2}
+\end{equation}
+
+\begin{equation} \label{eq:}
+    \sin (\theta) = \frac{h}{l}, \cos (\theta) = \frac{W}{l}
+\end{equation}
+
+\begin{equation} \label{eq:}
+    l = \sqrt{W^2 + h^2}
+\end{equation}
+
+\begin{equation} \label{eq:}
+    W = \frac{B - A}{2}
+\end{equation}
+
+% Harold A. Wheeler, "Simple Inductance Formulas for Radio Coils," Proceedings of the I.R.E., October 1928, pp. 1398-1400
+
+$h$ is height of cone, B diameter top of cone, A diameter base of cone, N number of turns, \bar{r} is effective with of coil $l$ is length of coil, $\theta$ is angle of coil, $L_{1V}$ is the vertical component of the inductance, $L_{1H}$ is the horizontal part of the inductance. \citep{wheeler}.
+
+$L_2$ is the secondary coil and will have many turns and small area.
+
+\begin{equation} \label{eq:l2}
+    L_2 = \frac{{\mu}_0 N^2 \pi {r}^2}{l}
+\end{equation}
+
+Where ${\mu}_0$ is permeability for vacuum, $N$ is the number of turns, and $l$ is the length of the coil. This equation comes from the long solenoid approximation.
+
+$C_1$ is an ordinary capacitor, the type of capacitor should be chosen to withstand the voltages and current required without degrading. And should have as low resistance as possible.
+
+$C_2$ is the place where we want the electric discharge to happen, and thus $C_2$ must withstand the voltages and currents required without degrading. This is achieved by using the self capacitance of a single conductor as opposed to the more common mutual capacitance of two paralell plates. $C_2$ is placed at the top of $L_2$ and is also known as the top load, the top load can be any shape that does not have sharp corners. The most common shapes are spherical or toroidal. The self capacitance of a spherical top load $C_2$ is given by \cref{eq:c2}.
+
+\begin{equation} \label{eq:c2}
+    C_2 = 4 \pi {\epsilon}_0 r_{c}
+\end{equation}
+
+Where ${\epsilon}_0$ is the permittivity of vacuum, and $r_c$ is the radius of the sphere. This equation is derived from the capacitance of an spherical paralell plate capacitor where the radius of the outer sphere goes toward infinity.
+
+\begin{equation} \label{eq:}
+    
+\end{equation}
 
 \todo{Mer utfyllende}
 %%%%%%%%%%%%% Stikkord
@@ -325,4 +334,35 @@ The resonant circuits step up the voltage from 160VDC to a voltage high enough t
 % Sekundær bestemmer frekvensen.
 % Q verdi?
 
-\newpage
+\section{Power supply}
+The power supply for the driver is, as for most electronic systems, critical for the quality of operation. This implementation uses three different power supplies for VCC\_P5V0, VCC\_P18V, and VCC\_HVDC. Wich are 5,0V DC, 18V DC, and 160V DC respectively. VCC\_P5V0 supplies the logic circuits, and should supply enough power for this, as well as not introducing noise to the signals in the logic circuits. VCC\_P18V supplies power to the transistor drivers in the interrupter, and has the same requirements as VCC\_P5V0. VCC\_HVDC supplies the power amplifier, and should be able to supply large peak currents with low resistance and delay, as seen from the simulation of the current drawn by the primary resonant circuit in \cref{fig:fblinsim} in \cref{sec:mod_fb}. How this can be achieved is assumed well understood and documented in the field of electronics and will not be discussed any further.
+
+\section{Shielding}
+\label{sec:shielding}
+The electric discharge produced by a tesla coil generates a large dynamic electromagnetic field\todo{How large?}. This will induce currents in any conductor close to the tesla coil. This must be taken into account when doing pcb layout and designing the chassis for the tesla coil driver. How this can be achieved is assumed well understood and documented in the field of electronics and electrodynamics and will not be discussed any further.
+
+\section{Optical channel}
+\label{sec:optical}
+
+As mentioned in \cref{sec:shielding} there is electromagnetic noise present when the tesla coil is used and a robust channel is needed for signal $X2$ because this signal is transmitted from the pulse shaper to the tesla coil driver, wich as mentioned in \cref{sec:pulseshaper} are physically located in different chassis some distance apart. For this plastic optical fibre is chosen. To further increase the robustness the signal $X2$ is modulated. The robustness and possible noise introduced in this channel is not discussed further as it can be treated as an isolated problem and is assumed well understood and documented in the field of electronics. A diagram of the optical channel is shown in \cref{fig:opticalchannel}.
+
+\begin{figure}[H]
+    \centering
+    \tikzstyle{int}=[draw, fill=yellow!20, minimum size=2em]
+    \tikzstyle{init} = [pin edge={to-,thin,black}]
+    \begin{tikzpicture}[node distance=2.5cm,auto,>=latex']
+        \node [int, pin={[init]above:$CW$}] (a) {tx};
+        \node (b) [left of=a,node distance=2cm, coordinate] {a};
+        \node [int] (c) [right of=a] {rx};
+        \node [int] (d) [left of=a] {Pulse shaper};
+        \node [int] (e) [right of=c] {Interrupter};
+        \node [coordinate] (end) [right of=c, node distance=2cm]{};
+        \path[->] (d) edge node {$X2$} (a);
+        \path[->] (a) edge node {$PWM$} (c);
+        \draw[->] (c) edge node {$X2$} (e) ;
+    \end{tikzpicture}
+    \caption{Diagram of optical channel}
+    \label{fig:opticalchannel}
+\end{figure}
+
+Where $CW$ is the carrier wave used to modulate the signal $X2$, $PWM$ is the modulated signal $X2$. The blocks tx and rx are the optical transmitter and reciever.

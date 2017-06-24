@@ -1,33 +1,103 @@
 \section{Signals in the DRSSTC}
 A description of the different signals in the DRSSTC
 
-\subsection{Triggering signal (X2)}
-\label{triggering_signal}
-The triggering signal $X2$ is two level and contains two pieces of information from $X1$, the frequency $f$ (tone) and the volume (intensity). The frequency is given by the time $T$ between the positive flanks of the signal $f=\frac{1}{T}$. This is the base harmonic of the acoustic tone heard at the output of the system. The volume is given by the duty cycle of the pulses (the relationship between the pulse being high and the total period $T$ of the pulse. \Cref{fig:tones} shows different tones, and \cref{fig:volumes} shows different volumes.
-
-\begin{figure}[!ht]
-    \centering
-    \begin{tikztimingtable}
-        X2 & 2L 1H 7L 1H 7L 1H 7L 1H 7L\\
-        X2 & 2L 1H 5L 1H 5L 1H 5L 1H 5L 1H 5L 1H 1L\\
-    \end{tikztimingtable}
-    \caption{Different tones}
-    \label{fig:tones}
-\end{figure}{}
-
-\begin{figure}[!ht]
-    \centering
-    \begin{tikztimingtable}
-        X2 & 2L 1H 7L 1H 7L 1H 7L 1H 7L\\
-        X2 & 2L 3H 5L 3H 5L 3H 5L 3H 5L\\
-    \end{tikztimingtable}
-    \caption{Different volumes}
-    \label{fig:volumes}
-\end{figure}{}
-
 \subsection{Feedback signal (X8)}
 The feedback signal X8 and X9, are coupled with a feedback transformer to the primary resonant circuit. The feedback transformers are hand wound 100 turns around a ferrite toroid wich the wire in the resonant circuit is fed trough. If this transformer is loaded with a transistor we will get a voltage over the transistor dependent on and in phase with the current running in the primary resonance circuit. The current running 
 
 \subsection{Primary resonant circuit signal (X6)}
 
 \subsection{Secondary resonant circuit signal (X7)}
+
+\subsection{??}
+
+\cref{fig:drsstc1} to \cref{fig:drsstc6} shows different examples of input pulses, and corresponding output pulses. Note that the timings and frequencies are not to scale, only relative timings.
+
+\Cref{fig:drsstc1} shows a single pulse on the input signal $X1$, here we see $X2$ is limited to a certain width. We also see that $X4$ and $X8$ goes high when $X2$ goes high, oscillates at the resonance frequency of the resonance circuit, and goes low when $X2$ goes low.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 20H 18L\\
+        X2 & 5L 10H 28L\\
+        X3 & 43H \\
+        X4 & 5L 10{1C} 28L\\
+        X8 & 5L 10{1C} 28L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1}
+    \label{fig:drsstc1}
+\end{figure}{}
+
+\Cref{fig:drsstc2} shows the same principle, only with a longer pulse on $X1$.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 30H 8L\\
+        X2 & 5L 10H 28L\\
+        X3 & 43H \\
+        X4 & 5L 10{1C} 28L\\
+        X8 & 5L 10{1C} 28L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1, longer input pulse}
+    \label{fig:drsstc2}
+\end{figure}{}
+
+\Cref{fig:drsstc3} shows the same input signal as \cref{fig:drsstc2} but with a different setting of the on-time on the pulse limiter (allowing longer on-time).
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 30H 8L\\
+        X2 & 5L 20H 18L\\
+        X3 & 20H 23L\\
+        X4 & 5L 15{1C} 23L\\
+        X8 & 5L 15{1C} 23L\\
+    \end{tikztimingtable}
+    }
+    \caption{One pulse on X1, longer on time}
+    \label{fig:drsstc3}
+\end{figure}{}
+
+
+\Cref{fig:drsstc4} to \cref{fig:drsstc6} shows multiple pulses on $X1$ and corresponding signals on $X2$. With on-time set to 2 units and minimum time between pulses set to 12 units.
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 10H 10L 10H 8L\\
+        X2 & 5L 2H 18L 2H 16L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc4}
+\end{figure}{}
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 10{4C}\\
+        X2 & 5L 2H 14L 2H 14L 2H 6L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc5}
+\end{figure}{}
+
+\begin{figure}[!ht]
+    \centering
+    \scalebox{0.8}{
+    \begin{tikztimingtable}
+        X1 & 5L 8{5C}\\
+        X2 & 5L 2H 18L 2H 18L\\
+    \end{tikztimingtable}
+    }
+    \caption{Multiple pulses on X1 (max on: 2, min between: 12)}
+    \label{fig:drsstc6}
+\end{figure}{}

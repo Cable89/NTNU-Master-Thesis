@@ -165,7 +165,7 @@
 
 %Drawing flow charts
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shapes,arrows,arrows.meta,quotes}
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{process} = [rectangle, draw, fill=blue!20, 
@@ -244,7 +244,7 @@
 \chapter*{List of Symbols\hfill} 
 \addcontentsline{toc}{chapter}{List of Symbols}
 \begin{flushleft}
-%	\input{symbols}
+	\input{src/symbols}
 \end{flushleft}
 
 \mainmatter
@@ -263,15 +263,15 @@
 \input{src/teslacoil}
 %Tidligere arbeid
 \input{src/earlier}
-%Teori?
-\input{src/theory}
-\input{src/audio}
+%Teori? nei
+%\input{src/theory}
+%\input{src/audio}
 %Beskrivelse av arkitektur (Blokkoppbygning)
 \input{src/DRSSTC}
 %Inngående beskrivelse av kretsene (inkludert designvalg)
 \input{src/DRSSTC_detalj}
 %Inngående beskrivelse av signaler i kretsene
-\input{src/DRSSTC_signals}
+%\input{src/DRSSTC_signals}
 %Matematisk beskrivelse av så mye som mulig av kretsen(e)
 \input{src/model}
 %Målebeskrivelse
