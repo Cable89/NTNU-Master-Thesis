@@ -215,6 +215,17 @@ Here we observe a pole pair in the left half plane, a single real pole in the le
 
 We see here that the output signal X6 starts with a quarter period of the step response shown in \cref{fig:step}, and then when the voltage peaks, meaning when the differential of the voltage is zero, a new step response with opposite phase is added to the output signal. This makes the output signal grow rapidly for three cycles to 160kV, before flattening out at 170kV.
 
+\Cref{fig:crlinsim10T} shows the same simulation as \cref{fig:crlinsim}, but here the input signal is set to zero after 10 periods.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{img/Linsim_10T.eps}
+    \caption{Linear simulation of transfer function with square wave with 10 periods at $f=f_0$ as input}
+    \label{fig:crlinsim10T}
+\end{figure}
+
+Here we see that the voltage continues to resonate after the input is set to zero, but attenuates exponentially.
+
 \newpage
 \section{Transfer function for feedback}
 \label{sec:mod_fb}
@@ -427,7 +438,10 @@ It is also proposed, based on the general consensus in the hobby community \cite
 
 Where $C_s$ is the capacitance introduced by the streamer. $l$ is the length of the streamer in meters, $C_u$ is the capacitance of the streamer per meter. This is an approximation, the actual capacitance of the streamer can be calculated from the definition of capacitance and becomes a complicated equation that also dependts on the ration between length and width of the streamer \citep{thinstraight}. Two values for the capacitance per meter used in the hobby community are 25pF \citep{conner}, and 5pF \citep{scantesla}.
 
+\newpage
 \section{Varying parameters}
+
+\Cref{fig:bode_r1} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $R_1$, $0\Omega$, $1\Omega$, $5\Omega$, $10\Omega$, and $100\Omega$.
 
 \begin{figure}[H]
     \centering
@@ -436,12 +450,45 @@ Where $C_s$ is the capacitance introduced by the streamer. $l$ is the length of 
     \label{fig:bode_r1}
 \end{figure}
 
+Here we see that a lower resistance $R_1$ gives a sharper peak, and higher magnitude on the output.
+
+\newpage
+\Cref{fig:fbbode_r1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $R_1$, $0\Omega$, $1\Omega$, $5\Omega$, $10\Omega$, and $100\Omega$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_R1.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying R1}
+    \label{fig:fbbode_r1}
+\end{figure}
+
+Here we see the same trend as in \cref{fig:bode_r1}, a lower resistance $R_1$ gives a sharper peak, and higher magnitude on the output. From this we can conclude that $R_1$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value for a single resonant circuit.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_r2} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $R_2$, $0\Omega$, $1k\Omega$, $10k\Omega$, $100k\Omega$, and $1M\Omega$.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_R2.eps}
     \caption{Bode plot of $H(j\omega)$ varying R2}
     \label{fig:bode_r2}
 \end{figure}
+
+Here we see that a lower resistance $R_2$ gives a higher magnitude on the output, but does not affect the sharpness of the peak.
+
+\Cref{fig:fbbode_r2} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $R_2$, $0\Omega$, $1\Omega$, $10\Omega$, $100\Omega$, and $1k\Omega$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_R2.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying R2}
+    \label{fig:fbbode_r2}
+\end{figure}
+
+Here we see that a lower resistance $R_2$ gives a higher magnitude, and a sharper peak. From this we can conclude that $R_2$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value for a single resonant circuit.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_g1} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $G_1$, $1e12{\Omega}^{-1}$, $1e3{\Omega}^{-1}$, $1e-6{\Omega}^{-1}$, $1e-12{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
 
 \begin{figure}[H]
     \centering
@@ -450,9 +497,128 @@ Where $C_s$ is the capacitance introduced by the streamer. $l$ is the length of 
     \label{fig:bode_g1}
 \end{figure}
 
+Here we see that although we have a large range of values for $G_1$ the plots group in two, and there only seems to be a difference if $G_1$ is larger or smaller than 1. The top group of plots are a result of values larger than 1, and the lower group are a result of values smaller than 1. We cannot draw any significant conclusions from this.
+
+\Cref{fig:fbbode_g1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $G_1$, $1e-3{\Omega}^{-1}$, $1e-4{\Omega}^{-1}$, $1e-4{\Omega}^{-1}$, $1e-5{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_G1.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying G1}
+    \label{fig:fbbode_g1}
+\end{figure}
+
+Here we see that when $G_1$ becomes larger than $~1e-5{\Omega}^{-1}$ we get a dip where the resonance peak was. This indicates we are unable to get any feedback signal. Thus $G_1$ should be smaller than $~1e-5{\Omega}^{-1}$, this is hard to control. This also implies that a streamer from the top load will affect the feedback signal, and with a too big streamer load the system with primary current feedback will be unable to function.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_k} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $k$, 1.0, 0.5, 0.2, 0.1, and 0.001.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_k.eps}
     \caption{Bode plot of $H(j\omega)$ varying k}
     \label{fig:bode_k}
 \end{figure}
+
+From this we see that the closer $k$ is to 1, the larger the magnitude, the sharpness and location of the peak does not seem to be affected.
+
+\Cref{fig:fbbode_k} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $k$, 1.0, 0.5, 0.2, 0.1, and 0.001.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_k.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying k}
+    \label{fig:fbbode_k}
+\end{figure}
+
+Here we see no effect of varying $k$. From this it may seem that a $k$ of 1 is the best. But we know from the hobby community that a $k$ above to 0.2 causes significant risk of arcing between the primary and secondary coils \citep{scantesla} \citep{loneoceans} \citep{conner} \citep{easternvoltage} \citep{terrel} \citep{chunkyboy86}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_c1} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$. Where $C_1 = 1 \cdot 10^{-7}$F.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/CoilRigBode_C1.eps}
+    \caption{Bode plot of $H(j\omega)$ varying C1}
+    \label{fig:bode_c1}
+\end{figure}
+
+From this we see that the resonance peak changes according to the change in $C_1$ as expected from the formula for resonance in a single resonance circuit. The magnitude seems to be a function of the resonance frequency, and it seems a larger magnitude may be obtained by reducing the value of $C_1$. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.
+
+\Cref{fig:fbbode_c1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$. Where $C_1 = 1 \cdot 10^{-7}$F.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_C1.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying C1}
+    \label{fig:fbbode_c1}
+\end{figure}
+
+From this we see that the resonance peak changes according to the change in $C_1$ as expected from the formula for resonance in a single resonance circuit. The magnitude seems to stay the same.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_c2} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$. Where $C_2 = 1 \cdot 10^{-11}$F.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/CoilRigBode_C2.eps}
+    \caption{Bode plot of $H(j\omega)$ varying C2}
+    \label{fig:bode_c2}
+\end{figure}
+
+Here we see very little change when varying $C_2$, we see a new peak forming when reducing $C_2$ to $0.001 C_2$.
+
+\Cref{fig:fbbode_c2} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$. Where $C_2 = 1 \cdot 10^{-11}$F.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_C2.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying C2}
+    \label{fig:fbbode_c2}
+\end{figure}
+
+Here we see very little change when varying $C_2$. It may seem that varying $C_2$ has little effect. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_l1} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $L_1$; $0.1 L_1$, $0.8 L_1$, $1.0 L_1$, $1.2 L_1$, $10 L_1$, where $L_1 = 1 \cdot 10^{-5}$H.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/CoilRigBode_L1.eps}
+    \caption{Bode plot of $H(j\omega)$ varying L1}
+    \label{fig:bode_l1}
+\end{figure}
+
+From this we see that the resonance peak changes according to the change in $L_1$ as expected from the formula for resonance in a single resonance circuit. The magnitude seems to be a function of the resonance frequency, and it seems a larger magnitude may be obtained by reducing the value of $L_1$. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.
+
+\Cref{fig:fbbode_l1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $L_1$; $0.1 L_1$, $0.8 L_1$, $1.0 L_1$, $1.2 L_1$, $10 L_1$, where $L_1 = 1 \cdot 10^{-5}$H.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_L1.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying L1}
+    \label{fig:fbbode_l1}
+\end{figure}
+
+From this we see that the resonance peak changes according to the change in $L_1$ as expected from the formula for resonance in a single resonance circuit. The magnitude seems to stay the same.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\Cref{fig:bode_l2} shows the bode plot of the transfer function for the resonant circuit $H(j\omega)$ with 5 different values for $L_2$; $0.01 L_2$, $0.8 L_2$, $1.0 L_2$, $1.2 L_2$, $100 L_2$, where $L_2 = 1 \cdot 10^{-1}$H.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/CoilRigBode_L2.eps}
+    \caption{Bode plot of $H(j\omega)$ varying L2}
+    \label{fig:bode_l2}
+\end{figure}
+
+Here we see little in resonance peak location or magnitude, apart from $100 L_2$ where the magnitude is drastically reduced.
+
+\Cref{fig:fbbode_l2} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(j\omega)$ with 5 different values for $L_2$; $0.01 L_2$, $0.8 L_2$, $1.0 L_2$, $1.2 L_2$, $100 L_2$, where $L_2 = 1 \cdot 10^{-1}$H.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{img/FeedBackBode_L2.eps}
+    \caption{Bode plot of $H_{FB}(j\omega)$ varying L2}
+    \label{fig:fbbode_l2}
+\end{figure}
+Here we see little in resonance peak location or magnitude, apart from $100 L_2$ where the magnitude is drastically increased. It may seem that varying $L_2$ has little effect. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.

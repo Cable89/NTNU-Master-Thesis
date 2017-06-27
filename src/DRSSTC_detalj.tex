@@ -170,7 +170,7 @@ The relation between the peak voltage $|U_{X8}|$ over $R_2$ and $L_1$ is shown i
 
 \subsubsection{Reset network}
 \label{sec:reset_net}
-The function of the network connected to the reset (RD) of the latch (U1A) is to reset the latch after a delay in the case that a zero crossing is not detected on X8 after X2 goes low. Note the inverting schmidth triggers U2C and U2D on both sides of the network. When X2 goes high the input of U2D goes low immediately due to the capacitor C2 being discharged through D7, but when X2 goes low the capacitor C2 will be charged through R3 and there will be a delay before the latch is reset. The time constant of R3 C2 is $\tau = 440 \cdot 10^{-6} s$, the positive going threshold voltage of the inverting schmitt trigger (74HC14) is $T^+ = 2,5V$ Wich is half of the supply voltage VCC\_P5V0. We know that a capacitor is charged to $0,5 \cdot$ VCC (where VCC is the applied voltage) after $0,7 \tau$, thus the filter R3 C2 together with U2D introduces a delay of $0,7 \tau = 308\mu s$, or if we have a resonance frequency $f_0$ of 110 kHz a delay of about 3,4 periods $T = \frac{1}{f_0}$.
+The function of the network connected to the reset (RD) of the latch (U1A) is to reset the latch after a delay in the case that a zero crossing is not detected on X8 after X2 goes low. Note the inverting schmidth triggers U2C and U2D on both sides of the network. When X2 goes high the input of U2D goes low immediately due to the capacitor C2 being discharged through D7, but when X2 goes low the capacitor C2 will be charged through R3 and there will be a delay before the latch is reset. The time constant of R3 C2 is $\tau = 440 \cdot 10^{-6} s$, the positive going threshold voltage of the inverting schmitt trigger (74HC14) is $T^+ = 2,5V$ Wich is half of the supply voltage VCC\_P5V0. We know that a capacitor is charged to $0,5 \cdot$ VCC (where VCC is the applied voltage) after $0,7 \tau$, thus the filter R3 C2 together with U2D introduces a delay of $0,7 \tau = 308\mu s$, or if we have a resonance frequency $f_0$ of 110 kHz a delay of about 3,4 periods $T = \frac{1}{f_0}$. If the synchronous shutdown does not work properly this filter should prevent or reduce noise from the interrupter not shutting down properly between each pulse on the input signal X2. This can also reduce the spark length if the spark is prevented from unintentionally continue longer than intended.
 
 \subsubsection{Input clamping and protection}
 D3-D6 are protection diodes which clamp the feedback signal to safe voltages. The network L1 and R2 introduces a tunable phase lead on the voltage. C1 and R1 is a filter to remove noise. D1 and D2 clamps the voltage to 0-5V.
@@ -200,11 +200,13 @@ The limiter prevents overcurrent in the coil rig by disabling the interrupter wh
     \label{fig:limiter}
 \end{figure}
 
-The feedback signal is retrieved from the primary resonant circuit via the feedback transformer L4. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R2 and C3, R2 and C3 also functions as a noise filter with a limit frequency $f_c$ of 16MHz given by \cref{eq:fc}.
+The feedback signal is retrieved from the primary resonant circuit via the feedback transformer L4. The diodes D1-D4 is a full bridge rectifier, schottky diodes are used for low propagation delay. The rectifier is loaded with R2 and C3, R2 and C3 also functions as a noise filter with a corner frequency $f_c$ of 16MHz given by \cref{eq:fc}.
 
 \begin{equation} \label{eq:fc}
     f_c = \frac{1}{2 \pi R_2 C_3}
 \end{equation}
+
+The corner frequency $f_c$ decides how much noise is allowed through to the comparator and thus how often the spark is shut down early unintentionally due to noise. The spark being shut down unintentionally generates noise on the acoustic signal.
 
 The rectified signal is fed into a comparator, the other input of the comparator is connected to a variable voltage controlled by a potentiometer. R3 is to set the highest level the variable voltage can be set to. R4 is to pull the input of the comparator low in the case that the potentiometer is disconnected.
 
@@ -221,6 +223,8 @@ Where $\frac{n_1}{n_2}$ is the winding ratio of the feedback transformer, $I_{X6
 If the voltage of the rectified feedback signal over R2 is higher than the voltage set by the potentiometer the output of the comparator goes low and resets the latch. The data input of the latch is connected to VCC, on the next positive flank of the interrupt signal X2 the data will be clocked to the output and the output will go high.
 
 R5 is to give the possibility to tune the resistance of R2 by removing R2 from the PCB and mounting R5 instead, R5 then replaces R2 in the calculations above.
+
+$R_2$ decides the range of current that can be sensed and compared to the preset level. This is critical to the maximum amplitude attainable on the output and the range of amplitudes attainable. And thus affects the volume and dynamic range of the acoustic signal.
 
 The output of the latch X3 is connected to the interrupter, as explained in \cref{sec:interrupter}. A low signal stops the output of the interrupter. A high signal allows the interrupt signal X2 to control the output.
 
@@ -274,38 +278,38 @@ The input signal to the resonant circuit $X6$ is the square wave output from the
 
 The values and the physical shapes of the components in the resonant circuit are important to the operation of the tesla coil. The values of the components will be discussed in \cref{sec:math}.
 
-$L_1$ is the primary coil, and will have few turns and large area.
+$L_1$ is the primary coil, and will have few turns and large area. It is important that $L_1$ is constructed such that $k$ is $~0.2$ and so that we wont get any arcing from $L_1$ to $L_2$. This can be acheived by using a helical coil or a flat spiral coil. The inductance of $L_1$ can be calculated from \cref{eq:l1_1} if a helical coil is used.
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_1}
     L_1 = \sqrt{(L_{1V}\cdot \sin (\theta))^2 + (L_{1H}\cdot \cos (\theta))^2}
 \end{equation}
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_2}
     L_{1V} = \frac{R^2 N^2}{9 \bar{r} + 10 h}, L_{1H} = \frac{R^2 N^2}{8 \bar{r} + 11 h}
 \end{equation}
 
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_3}
     \bar{r} = \frac{A}{2} + \frac{W}{2}
 \end{equation}
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_4}
     \sin (\theta) = \frac{h}{l}, \cos (\theta) = \frac{W}{l}
 \end{equation}
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_5}
     l = \sqrt{W^2 + h^2}
 \end{equation}
 
-\begin{equation} \label{eq:}
+\begin{equation} \label{eq:l1_6}
     W = \frac{B - A}{2}
 \end{equation}
 
 % Harold A. Wheeler, "Simple Inductance Formulas for Radio Coils," Proceedings of the I.R.E., October 1928, pp. 1398-1400
 
-$h$ is height of cone, B diameter top of cone, A diameter base of cone, N number of turns, \bar{r} is effective with of coil $l$ is length of coil, $\theta$ is angle of coil, $L_{1V}$ is the vertical component of the inductance, $L_{1H}$ is the horizontal part of the inductance. \citep{wheeler}.
+$h$ is height of cone, B diameter top of cone, A diameter base of cone, N number of turns, $\bar{r}$ is effective with of coil $l$ is length of coil, $\theta$ is angle of coil, $L_{1V}$ is the vertical component of the inductance, $L_{1H}$ is the horizontal part of the inductance. This equation comes from the empirical wheeler equations \citep{wheeler}.
 
-$L_2$ is the secondary coil and will have many turns and small area.
+$L_2$ is the secondary coil and will have many turns and small area. This has the form of a solenoid with a single layer of windings. The inductance of $L_2$ can be found with \cref{eq:l2}.
 
 \begin{equation} \label{eq:l2}
     L_2 = \frac{{\mu}_0 N^2 \pi {r}^2}{l}
@@ -322,10 +326,6 @@ $C_2$ is the place where we want the electric discharge to happen, and thus $C_2
 \end{equation}
 
 Where ${\epsilon}_0$ is the permittivity of vacuum, and $r_c$ is the radius of the sphere. This equation is derived from the capacitance of an spherical paralell plate capacitor where the radius of the outer sphere goes toward infinity.
-
-\begin{equation} \label{eq:}
-    
-\end{equation}
 
 \todo{Mer utfyllende}
 %%%%%%%%%%%%% Stikkord

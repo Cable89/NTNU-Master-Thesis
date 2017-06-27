@@ -1,34 +1,22 @@
 \chapter{Conclusion}
-Some words introducing the sections here
+A implementation of a DRSSTC has been analyzed and described. The intended function of components have been presented and substantiated with mathematics. The component values or parameters that need to be adapted to the resonant frequency are; the delay in the latch reset network $t_r$ given by $R_3$ and $C_2$ in the interrupter, the phase lead time $t_d$ given by $L_1$ and $R_2$ in the interrupter, and the corner frequency of the noise filter $f_c$ given by $R_2$ and $C_3$ in the limiter. $t_r$ affects the acoustic signal if the synchronous shutdown in the interrupter does not function correctly. $t_d$ affects the heat generated in the power amplifier, and the amplitude on the output. $f_c$ can affect noise on the acoustic signal.
 
-\section{Trigger pulse length}
-The input pulse length is the time the triggering signal X2 is active (high) for each period. See \cref{triggering_signal} for a description of the triggering signal X2. The longer the triggering signal is active the more cycles are driven into the resonant circuit as explained in \cref{sec:interrupter}. When more cycles are driven into the resonant circuit the voltage on the output rises exponentially as seen in \cref{fig:linsim}, with higher voltage on the output a longer streamer (spark) can be produced as explained in \cref{sec:arc}. The relation between the input pulse length and the output streamer length is \todo{Find the relation}.
-\todo{Relate to volume}
+The component values or parameters that need to be adapted to the current flowing in the primary resonant circuit $I_1$ are; $|Z_L|$ given by $L_1$ and $R_2$ in the interrupter, $R_2$ in the limiter, and the number of turns $n$ on $L_3$ and $L_4$ in the primary resonant circuit. $|Z_L|$ affects. $R_2$ affects the range of amplitude attainable on the output. $n$ affects the selection of $|Z_L|$ and $R_2$.
 
-\section{Interrupter feedback voltage level}
-\todo{Needs to be strong enough}
+In the resonant circuit we have proven that the ohmic resistances $R_1$ and $R_2$ in both the primary and secondary circuit should be as small as possible to give a high as possible amplitude on the output, the conductance of the streamer $G_1$ does not seem to affect the resonant frequency (detuning) or the amplitude on the output, but does affect the current in the primary resonant circuit. And will affect the feedback signals $X8$ and $X9$. The coupling coefficient $k$ only affects the amplitude on the output, as long as no arcing happens between the primary and secondary coils $L_1$ and $L_2$. According to the transfer functions $H(s)$ and $H_{FB}(s)$ varying $C_1$, $L_1$, $C_2$, or $L_2$ does not give the same results as expected from the common assumptions in the hobby community. Here no other conclusions can be drawn other that this may be a topic for further research.
 
-\section{Interrupter feedback phase lead}
-The interrupter feedback phase lead is the phase lead introduced to the feedback voltage in the interrupter with relation to the current as described in \cref{sec:phaselead}. This gives a negative delay to compensate for the delay in the feedback loop from the current flowing in the primary circuit to the transistors driving the primary circuit. As we want to switch the transistors driving the primary circuit when the current flowing through them is as low as possible to give as low power dissipates in the transistors as possible and to be completely in phase with the step response which is ongoing in the resonant circuit to amplify the response as much as possible. 
-\todo{Add plot proving in phase is better}
-\todo{Calculate how much better}
+The electrical measurements done on the physical implementation further substantiates the mode of operation of the driver. The acoustic measurements substantiates that a acoustic signal can be generated with the circuits presented here, and may be used for further research on the streamer and any alternative or related ways of generating an acoustic signal with a tesla coil. This report may also give an operator insight into what input signals $X1$ are suitable for this implementation of driver.
 
-\section{Reset network filter}
-The reset network filter for the latch in the interrupter is explained in \cref{sec:reset_net}, this filter has no effect on spark length or tone quality as long as the feedback circuitry and synchronous shutdown works properly. But if the synchronous shutdown does not work properly. This filter should prevent or reduce noise from the interrupter not shutting down properly between each pulse on the input signal X2. This can also reduce the spark length if the spark is prevented from unintentionally continue longer than intended.
-\todo{Doesen't affect spark length, tone quality?}
 
-\section{Limiter feedback filter limit frequency}
-The limiter feedback filter is explained in \cref{sec:limiter}, and its limit frequency decides how much noise is allowed through to the comparator and thus how often the spark is shut down early unintentionally due to noise. The spark being shut down unintentionally generates noise on the acoustic signal.
-\todo{Affects noise on tone}
-\todo{What kind of noise}
+% Resonansfrekvens
+%TK514 R3,C2 -> T
+%TK514 L1, R2 -> t_d
+%TK513 R2, C3 -> f_c
 
-\section{Limiter feedback current sense range}
-The limiter feedback is explained in \cref{sec:limiter} and the range of current that can be sensed and compared to the preset level is critical to the maximum spark length attainable and the range of spark lengths attainable. And thus affects the volume and dynamic range of the acoustic signal.
-\todo{Affects volume range}
+% Strøm
+%TK514 L1, R2 -> |Z_L| feedbackspenning
+%TK513 R2 -> feedbackspenning
+% n1/n2 -> feedbackspenning
 
-\section{Resistance in resonant circuit}
-The resistance in the resonant circuit which is described in \cref{sec:resonant} affects the spark length. The resistance decides the Q value of the resonant circuit, and thus how much gain we get at resonance, and how distinct the resonance is.
-\todo{Affects spark length}
-\todo{Insert or reference plots}
 
-\section{}
+% Resonanskrets
