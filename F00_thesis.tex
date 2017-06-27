@@ -26,6 +26,11 @@
 \usepackage{sidecap}
 %byman>>
 
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
 %<<byman
 %% We want UK-english hyphenation patterns.byman
 \usepackage[british]{babel}
@@ -220,6 +225,14 @@
 \fancyhead[RO]{{\footnotesize\rightmark}\hspace{1em}\thepage}
 %byman>>
 
+\setcounter{page}{1}
+\input{src/abstract}
+\newpage
+\input{src/sammendrag}
+\newpage
+\input{src/preface}
+\cleardoublepage
+
 %TOC
 \tableofcontents
 %\addcontentsline{toc}{chapter}{Contents}
@@ -252,8 +265,7 @@
 \cleardoublepage
 %\input{F01-copyright}
 %\input{F02-dedication}
-%\input{F03-abstract}
-%\input{F04-preface}
+
 %\input{F05-acknowledgements}
 %
 %Chapters
@@ -308,15 +320,18 @@
 
 %<<byman
 %% Configuration of the header strings for the Appendices
-%\renewcommand{\chaptermark}[1]{%
-%  \markboth{\MakeUppercase{\appendixname\ \thechapter}}%
-%  {\MakeUppercase{#1}}
-%}
-%\fancyhead[RE,LO]{}
-%
-%\appendix
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\MakeUppercase{\appendixname\ \thechapter}}%
+  {\MakeUppercase{#1}}
+}
+\fancyhead[RE,LO]{}
+
+\appendix
 %byman>>
-%\include{FFF-APPDX} 
+\include{appdx/matlab}
+\include{appdx/akustisk}
+
+
 
 
 
