@@ -151,7 +151,7 @@ Orders of magnitude for the parameters in the transfer function is shown in \cre
     \label{tab:mod_params}
 \end{table}
 
-Shown in \cref{fig:bode} is the bode plot of the transfer function $H(s)$ \cref{eq:5} of the resonant circuit with the orders of magnitude in \cref{tab:mod_params}. Where the value for $G_1$ is the minimum conductance possible when there is no electrical discharge. With electrical discharge (streamer or corona) the conductance will increase.
+Shown in \cref{fig:bode} is the bode plot of the transfer function $H(s)$ \cref{eq:5} of the resonant circuit with the orders of magnitude in \cref{tab:mod_params}. Where the value for $G_1$ is the minimum conductance possible when there is no electrical discharge. With electrical discharge (streamer or corona) the conductance will increase. The figures in this section is generated with Matlab and the code used to generate them can be found in \cref{sec:appdx:matlab}
 
 \begin{figure}[H]
     \centering
@@ -170,6 +170,11 @@ We would expect a resonance frequency given by \cref{eq:f0} and \cref{tab:mod_pa
 \begin{equation} \label{eq:f0}
     f_0 = \frac{1}{2 \pi \sqrt{L_1 C_1}}
 \end{equation}
+
+\begin{equation} \label{eq:Q}
+    Q = \frac{f_0}{BW} = \frac{X}{R} = \frac{2 \pi f L_1}{R_1}
+\end{equation}
+Where $BW$ is the bandwidth.
 
 In \cref{fig:step}, we see the step and impulse responses of the transfer function $H(s)$ for the resonant circuit.
 
@@ -233,7 +238,7 @@ We see here that the output signal X7 starts with a quarter period of the step r
 Here we see that the voltage continues to resonate after the input is set to zero, but attenuates exponentially.
 
 \newpage
-\section{Transfer function for primary current $I_1$}
+\section{Transfer function for primary current I1}
 \label{sec:mod_fb}
 If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_{X6}}$ we get the transfer function for the current flowing in the primary resonant circuit $I_1$ this is the signal that is coupled to the feedback signals X8 and X9 with current sense transformers $L_3$ and $L_4$. This is transfer function $H_{FB}$ is shown in \cref{eq:fb_1}. Where $Z_1$ to $Z_4$ are the same impedances as given in \cref{eq:4}.
 
@@ -408,7 +413,7 @@ When the electric discharge from the top load of the resonant circuit forms long
 where
 
 \begin{equation}
-    \theta = \theta_0 + \theta_1 exp(-\alpha |i|)
+    \theta = \theta_0 + \theta_1 \exp(-\alpha |i|)
 \end{equation}
 
 and the parameters in this model are shown in \cref{tab:g1params}.
@@ -431,19 +436,22 @@ and the parameters in this model are shown in \cref{tab:g1params}.
 
 $G_{min}$ is the least possible conductance from the top load $C_2$ to ground. This conductance is present before any streamers form as well as after streamers have formed.
 
+\newpage
+\Cref{fig:foto:streamer} shows a streamer discharge, \cref{fig:foto:corona} shows a corona discharge.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics{img/foto/Streamer.jpg}
-    \caption{Streamer}
+    \includegraphics[height=0.4\textheight]{img/foto/Streamer.jpg}
+    \caption{Streamer discharge to a grounded object}
+    Photo: Sindre Vaskinn Hunn
     \label{fig:foto:streamer}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includegraphics{img/foto/Streamer.jpg}
-    \caption{Streamer}
-    \label{fig:foto:streamer}
+    \includegraphics[height=0.4\textheight]{img/foto/Corona.jpg}
+    \caption{Corona discharge}
+    \label{fig:foto:corona}
 \end{figure}
 
 \subsection{Streamer capacitance}
@@ -458,12 +466,12 @@ Where $C_s$ is the capacitance introduced by the streamer. $l$ is the length of 
 \newpage
 \section{Varying parameters}
 
-\Cref{fig:bode_r1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $R_1$, $0\Omega$, $1\Omega$, $5\Omega$, $10\Omega$, and $100\Omega$.
+\Cref{fig:bode_r1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $R_1$, $0\Omega$, $1\Omega$, $5\Omega$, $10\Omega$, and $100\Omega$. The other parameters are given in \cref{tab:mod_params} for this entire section.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_R1.eps}
-    \caption{Bode plot of $H(s)$ varying R1}
+    \caption{Bode plot of $H(s)$ varying $R_1$}
     \label{fig:bode_r1}
 \end{figure}
 
@@ -474,11 +482,11 @@ Here we see that a lower resistance $R_1$ gives a sharper peak, and higher magni
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_R1.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying R1}
+    \caption{Bode plot of $H_{FB}(s)$ varying $R_1$}
     \label{fig:fbbode_r1}
 \end{figure}
 
-Here we see the same trend as in \cref{fig:bode_r1}, a lower resistance $R_1$ gives a sharper peak, and higher magnitude on the output. From this we can conclude that $R_1$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value for a single resonant circuit.
+Here we see the same trend as in \cref{fig:bode_r1}, a lower resistance $R_1$ gives a sharper peak, and higher magnitude on the output. From this we can conclude that $R_1$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value \cref{eq:Q} for a single series resonant circuit.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
@@ -487,7 +495,7 @@ Here we see the same trend as in \cref{fig:bode_r1}, a lower resistance $R_1$ gi
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_R2.eps}
-    \caption{Bode plot of $H(s)$ varying R2}
+    \caption{Bode plot of $H(s)$ varying $R_2$}
     \label{fig:bode_r2}
 \end{figure}
 
@@ -497,34 +505,34 @@ Here we see that a lower resistance $R_2$ gives a higher magnitude on the output
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_R2.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying R2}
+    \caption{Bode plot of $H_{FB}(s)$ varying $R_2$}
     \label{fig:fbbode_r2}
 \end{figure}
 
-Here we see that a lower resistance $R_2$ gives a higher magnitude, and a sharper peak. From this we can conclude that $R_2$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value for a single resonant circuit.
+Here we see that a lower resistance $R_2$ gives a higher magnitude, and a sharper peak. From this we can conclude that $R_2$ should be as low as possible. This is consistent with design recommendations in the hobby community, and the known formula for Q value \cref{eq:Q} for a single series resonant circuit.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\Cref{fig:bode_g1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $G_1$, $1e12{\Omega}^{-1}$, $1e3{\Omega}^{-1}$, $1e-6{\Omega}^{-1}$, $1e-12{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
+\Cref{fig:bode_g1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $G_1$, $1T{\Omega}^{-1}$, $1k{\Omega}^{-1}$, $1\mu{\Omega}^{-1}$, $1p{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_G1.eps}
-    \caption{Bode plot of $H(s)$ varying G1}
+    \caption{Bode plot of $H(s)$ varying $G_1$}
     \label{fig:bode_g1}
 \end{figure}
 
 Here we see that although we have a large range of values for $G_1$ the plots group in two, and there only seems to be a difference if $G_1$ is larger or smaller than 1. The top group of plots are a result of values larger than 1, and the lower group are a result of values smaller than 1. We cannot draw any significant conclusions from this.
 
-\Cref{fig:fbbode_g1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $G_1$, $1e-3{\Omega}^{-1}$, $1e-4{\Omega}^{-1}$, $1e-4{\Omega}^{-1}$, $1e-5{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
+\Cref{fig:fbbode_g1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $G_1$, $1m{\Omega}^{-1}$, $100\mu{\Omega}^{-1}$, $10\mu{\Omega}^{-1}$, $1\mu{\Omega}^{-1}$, and $0{\Omega}^{-1}$.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_G1.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying G1}
+    \caption{Bode plot of $H_{FB}(s)$ varying $G_1$}
     \label{fig:fbbode_g1}
 \end{figure}
 
-Here we see that when $G_1$ becomes larger than $~1e-5{\Omega}^{-1}$ we get a dip where the resonance peak was. This indicates we are unable to get any feedback signal. Thus $G_1$ should be smaller than $~1e-5{\Omega}^{-1}$, this is hard to control. This also implies that a streamer from the top load will affect the feedback signal, and with a too big streamer load the system with primary current feedback will be unable to function.
+Here we see that when $G_1$ becomes larger than $~1\cdot10^{-5}{\Omega}^{-1}$ we get a dip where the resonance peak was. This indicates we are unable to get any feedback signal. Thus $G_1$ should be smaller than $~1\cdot10^{-5}{\Omega}^{-1}$, this is hard to control. This also implies that a streamer from the top load will affect the feedback signal, and with a too big streamer load the system with primary current feedback will be unable to function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
@@ -533,7 +541,7 @@ Here we see that when $G_1$ becomes larger than $~1e-5{\Omega}^{-1}$ we get a di
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_k.eps}
-    \caption{Bode plot of $H(s)$ varying k}
+    \caption{Bode plot of $H(s)$ varying $k$}
     \label{fig:bode_k}
 \end{figure}
 
@@ -543,7 +551,7 @@ From this we see that the closer $k$ is to 1, the larger the magnitude, the shar
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_k.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying k}
+    \caption{Bode plot of $H_{FB}(s)$ varying $k$}
     \label{fig:fbbode_k}
 \end{figure}
 
@@ -551,22 +559,22 @@ Here we see no effect of varying $k$. From this it may seem that a $k$ of 1 is t
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\Cref{fig:bode_c1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$. Where $C_1 = 1 \cdot 10^{-7}$F.
+\Cref{fig:bode_c1} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$. Where $C_1 = 100$nF.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_C1.eps}
-    \caption{Bode plot of $H(s)$ varying C1}
+    \caption{Bode plot of $H(s)$ varying $C_1$}
     \label{fig:bode_c1}
 \end{figure}
 
 From this we see that the resonance peak changes according to the change in $C_1$ as expected from the formula for resonance in a single resonance circuit. The magnitude seems to be a function of the resonance frequency, and it seems a larger magnitude may be obtained by reducing the value of $C_1$. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.
 
-\Cref{fig:fbbode_c1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$. Where $C_1 = 1 \cdot 10^{-7}$F.
+\Cref{fig:fbbode_c1} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $C_1$, $0.1C_1$, $0.8C_1$, $1.0C_1$, $1.2C_1$, $10C_1$.  Where $C_1 = 100$nF.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_C1.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying C1}
+    \caption{Bode plot of $H_{FB}(s)$ varying $C_1$}
     \label{fig:fbbode_c1}
 \end{figure}
 
@@ -574,22 +582,22 @@ From this we see that the resonance peak changes according to the change in $C_1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-\Cref{fig:bode_c2} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$. Where $C_2 = 1 \cdot 10^{-11}$F.
+\Cref{fig:bode_c2} shows the bode plot of the transfer function for the resonant circuit $H(s)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$. Where $C_2 = 10$pF.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_C2.eps}
-    \caption{Bode plot of $H(s)$ varying C2}
+    \caption{Bode plot of $H(s)$ varying $C_2$}
     \label{fig:bode_c2}
 \end{figure}
 
 Here we see very little change when varying $C_2$, we see a new peak forming when reducing $C_2$ to $0.001 C_2$.
 
-\Cref{fig:fbbode_c2} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$. Where $C_2 = 1 \cdot 10^{-11}$F.
+\Cref{fig:fbbode_c2} shows the bode plot of the transfer function for the current in the primary resonant circuit $H_{FB}(s)$ with 5 different values for $C_2$; $0.01C_2$, $0.1C_2$, $1.0C_2$, $10C_2$, $100C_2$.  Where $C_2 = 10$pF.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_C2.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying C2}
+    \caption{Bode plot of $H_{FB}(s)$ varying $C_2$}
     \label{fig:fbbode_c2}
 \end{figure}
 
@@ -602,7 +610,7 @@ Here we see very little change when varying $C_2$. It may seem that varying $C_2
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_L1.eps}
-    \caption{Bode plot of $H(s)$ varying L1}
+    \caption{Bode plot of $H(s)$ varying $L_1$}
     \label{fig:bode_l1}
 \end{figure}
 
@@ -612,7 +620,7 @@ From this we see that the resonance peak changes according to the change in $L_1
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_L1.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying L1}
+    \caption{Bode plot of $H_{FB}(s)$ varying $L_1$}
     \label{fig:fbbode_l1}
 \end{figure}
 
@@ -625,7 +633,7 @@ From this we see that the resonance peak changes according to the change in $L_1
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigBode_L2.eps}
-    \caption{Bode plot of $H(s)$ varying L2}
+    \caption{Bode plot of $H(s)$ varying $L_2$}
     \label{fig:bode_l2}
 \end{figure}
 
@@ -635,7 +643,7 @@ Here we see little in resonance peak location or magnitude, apart from $100 L_2$
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackBode_L2.eps}
-    \caption{Bode plot of $H_{FB}(s)$ varying L2}
+    \caption{Bode plot of $H_{FB}(s)$ varying $L_2$}
     \label{fig:fbbode_l2}
 \end{figure}
 Here we see little in resonance peak location or magnitude, apart from $100 L_2$ where the magnitude is drastically increased. It may seem that varying $L_2$ has little effect. This does not match with the hobby community recommendation of the two resonance frequencies needing to be the same.

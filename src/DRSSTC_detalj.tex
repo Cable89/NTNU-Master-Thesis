@@ -5,7 +5,6 @@
 %    \label{fig:block}
 %\end{figure}
 
-\newpage
 \section{Pulse shaper}
 \label{sec:pulseshaper}
 The purpose of the pulse shaper is to take the input signal $X1$ and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver. The first step in the pulse shaper is to transform the input signal $X1$ to two level as shown in \cref{fig:schmidt}.
@@ -71,6 +70,7 @@ Limiting the frequencies allowed is done by choosing a minimum time $T_P$ after 
 
 How this can be implemented is not discussed any further in this thesis. But this thesis should give the basis for choosing maximum and minimum values for $T_H$ and $T_P$.
 
+\newpage
 \section{Interrupter}
 \label{sec:interrupter}
 
@@ -244,8 +244,8 @@ The output of the latch X3 is connected to the interrupter, as explained in \cre
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{img/LimiterTransfer.eps}
-    \caption{I=50A}
+    \includegraphics[trim={0cm 1.2cm 0cm 2cm},clip,width=0.8\textwidth]{img/LimiterTransfer.eps}
+    \caption{$I_1$=50A}
     \label{fig:limitertransfer}
 \end{figure}
 
@@ -260,20 +260,20 @@ The output of the latch X3 is connected to the interrupter, as explained in \cre
 
 The purpose of the power amplifier is to amplify the signal coming from the interrupter X5 and drive the resonant circuit with a high voltage VCC\_HVDC (\cref{sec:psu}). The power amplifier is shown in \cref{fig:tk531}, note that the feedback transformer L4, as well as the secondary resonant circuit L2 and C2 is not shown for simplicity. The feedback transformer L3 is included in the figure.
 
+The power amplifier is a full bridge inverter using Isolated Gate Bipolar Transistors (IGBTs), IGBTs are chosen over MOSFETs due to IGBTs having lower forward voltage drop at higher voltages and currents. The IGBTs are Q1 - Q4.The 1N4744A diodes (15V Zener) is there to clamp the gate voltage to protect the gate of the IGBT from over voltage. The 10 Ohm resistors is to protect from overcurrent. The 1V5KE400A schottky diodes are to protect the IGBTs from reverse voltage transients. The 15ETX06 diodes are there to recycle the leftover energy into the bus capacitors in the power supply when we have stopped switching, as IGBTs does not conduct reverse current. L3 is the current sense feedback transformer, L1 and C1 is the primary resonant circuit. T1 and T2 are gate drive transformers. The supply voltage VCC\_HVDC is 160VDC.
+
+\subsubsection{Gate drive transformers}
+T1 and T2 are gate drive transformers, the purpose of which is to isolate the low voltages in the interrupter from the higher voltages in the power amplifier, as well as to switch the phase for half of X5 the signal driving the transistors.
+
+%%%%%%% Stikkord
+%the anti-parallel diodes in the IGBT recycles the leftover energy into the main bus capacitors as the current rings down.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textheight,angle=-90]{Skjema/TK531_Utgangstrinn_r.pdf}
     \caption{Power Amplifier}
     \label{fig:tk531}
 \end{figure}
-
-The power amplifier is a full bridge inverter using Isolated Gate Bipolar Transistors (IGBTs), IGBTs are chosen over MOSFETs due to IGBTs having lower forward voltage drop at higher voltages and currents. The IGBTs are Q1 - Q4.The 1N4744A diodes (15V Zener) is there to clamp the gate voltage to protect the gate of the IGBT from over voltage. The 10 Ohm resistors is to protect from overcurrent. The 1V5KE400A schottky diodes are to protect the IGBTs from reverse voltage transients. The 15ETX06 diodes are there to recycle the leftover energy into the bus capacitors in the power supply when we have stopped switching, as IGBTs does not conduct reverse current. L3 is the current sense feedback transformer, L1 and C1 is the primary resonant circuit. T1 and T2 are gate drive transformers. The supply voltage VCC\_HVDC is 160VDC.
-
-\subsection{Gate drive transformers}
-T1 and T2 are gate drive transformers, the purpose of which is to isolate the low voltages in the interrupter from the higher voltages in the power amplifier, as well as to switch the phase for half of X5 the signal driving the transistors.
-
-%%%%%%% Stikkord
-%the anti-parallel diodes in the IGBT recycles the leftover energy into the main bus capacitors as the current rings down.
 
 \newpage
 \section{Coil rig}
