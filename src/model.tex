@@ -1,6 +1,7 @@
 \chapter{Mathematical model}
 \label{sec:math}
 
+To better understand the load of the driver, which is the coil rig, we will look at a mathematical description of the coil rig. With a better understanding and good mathematical description of the coil rig the reader should be better suited to improve or adapt the driver.
 
 \section{Transfer function for coil rig}
 \label{sec:coilrigmath}
@@ -210,10 +211,8 @@ Here we see that we have a damped sinusiodal response with a frequency $f_s$ of 
     \caption{Poles and zeros for $H(s)$}
     \label{tab:coilrigpoles}
 \end{table}
-\todo{Bytte $\omega$ med $f$ ?}
 
-Here we observe a complex conjugated pole pair in the left half plane close to the imaginary axis, a single pole on the real axis far in the left half plane, a pole and a zero on the real axis close to origo, as well as two zeros in origo. From this we can say that the system is dominated by the complex pole pair and the zeros in origo. The pole and zero at the same place will cancel eachother out, and since the last pole is far to the left in relation to the complex pole pair, over four times as far out on the real axis at -46, than the complex pole pair is on the complex axis at $\pm 9,9$. It will have an effect but not dominating. A complex pole pair together with two zeros in origo implies a band pass filter, this matches well with the frequency response. The closer to the imaginary axis the pole pair is the higher the magnitude in the frequency response. This is consistent with the desired functionality. The pole far out on the real axis will give positive (higher magnitude) contribution that is at maximum in origo and reduces when the frequency increases.
-\todo{Bekrefte drøfting}
+Here we observe a complex conjugated pole pair in the left half plane close to the imaginary axis, a single pole on the real axis far in the left half plane, a pole and a zero on the real axis close to origo, as well as two zeros in origo. From this we can say that the system is dominated by the complex pole pair and the zeros in origo. The pole and zero at the same place will cancel each other, and since the last pole is far to the left in relation to the complex pole pair, over four times as far out on the real axis at -46, than the complex pole pair is on the complex axis at $\pm 9,9$. It will have an effect but not dominating. A complex pole pair together with two zeros in origo implies a high pass filter, this does not matc well with the frequency response. The closer to the imaginary axis the pole pair is the higher the magnitude in the frequency response. This is consistent with the desired functionality. The pole far out on the real axis will give positive (higher magnitude) contribution that is at maximum in origo and reduces when the frequency increases, this makes the response closer to a band pass filter witch is consistent with the frequency response.
 
 \Cref{fig:crlinsim} shows the result of a linear simulation of the transfer function of the resonant circuit with a square wave input signal with amplitude 160V peak and frequency 159kHz.
 
@@ -331,7 +330,7 @@ Here we see a damped sinusoiodal response with a frequency $f_s$ of 167kHz witch
     \label{tab:fbcoilrigpoles}
 \end{table}
 
-Here we observe a complex conjugated pole pair in the left half plane, two real poles in the left half plane. As well as three zeros, two in the left half plane and one in origo. We see that the pole and zero close to origo cancel each other out, but the pole and zero further to the left does not completely cancel out. This system is dominated by the complex conjugated pole pair together with the zero in origo. The pole and zero far to the left will have little effect. This implies a band pass filter, the complex conjugated poles are close to the imaginary axis which gives a higher magnitude and is consistent with the desired functionality.
+Here we observe a complex conjugated pole pair in the left half plane, two real poles in the left half plane. As well as three zeros, two in the left half plane and one in origo. We see that the pole and zero close to origo cancel each other, but the pole and zero further to the left does not completely cancel out. This system is dominated by the complex conjugated pole pair together with the zero in origo. The pole and zero far to the left will have little effect. This implies a band pass filter, the complex conjugated poles are close to the imaginary axis which gives a higher magnitude and is consistent with the desired functionality.
 
 \Cref{fig:fblinsim} shows the result of a linear simulation of the transfer function of the feedback signal with a 160V peak square wave input signal with amplitude 1 and frequency 159kHz.
 

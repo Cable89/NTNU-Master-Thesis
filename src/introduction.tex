@@ -3,7 +3,7 @@
 Universities, science centers and other institutions has the need for equipment that demonstrates physical phenomena in interesting and audience friendly ways. An example of this is a Double Resonant Solid State Tesla Coil (DRSSTC). This is a contraption that by the use of high voltage generates a sequence of electrical discharges. When these discharges happen in air a sound wave is generated. By modulating the frequencies of these discharges one can generate sound with different tones. A DRSSTC can in this way be made into a musical instrument.
 There is no big commercial or academic community for tesla coils, but tesla coils are mostly designed and used as a hobby. There are a few people sharing their designs on the internet that most of the tesla coil designs are based on. Few or none of these substantiate design choices or assumptions with physics and math. This thesis will attempt to substantiate the design choices done in the driver for a musical dual resonant solid state tesla coil.
 
-\Cref{fig:teslabano} shows a DRSSTC in use where a streamer has formed from the top load to a grounded copper object.
+\Cref{fig:teslabano} shows a DRSSTC in use with an electric discharge from the top to a grounded copper object.
 
 \begin{figure}[ht]
     \centering
@@ -16,7 +16,7 @@ There is no big commercial or academic community for tesla coils, but tesla coil
 \section{Tesla Coil}
 \label{tesla}
 %http://www.tfcbooks.com/tesla/contents.htm
-The Tesla Coil is a form of resonant transformer invented by Nikolai Tesla and used for experiments with artificial illumination \citep{5570149}. A resonant transformer consists of two inductively coupled coils, each loaded with a capacitance such that they get the same resonance frequencies. The resonant transformer has since gotten a lot of applications, among others; RFID, NFC, and Wireless charging. The resonant transformer in the form of the Tesla Coil has also become a popular entertainment device.
+The Tesla Coil is a form of resonant transformer invented by Nikolai Tesla and used for experiments with artificial illumination \citep{5570149}. A resonant transformer consists of two inductively coupled coils, each loaded with a capacitance such that they get the same resonance frequencies. The resonant transformer has since gotten a lot of applications, among others; RFID \citep{b1960radio}, NFC \citep{5958681}, and Wireless charging \citep{5754800}. The resonant transformer in the form of the Tesla Coil has also become a popular entertainment device.
 %Death ray
 %Entertainment
 
@@ -30,8 +30,11 @@ Simulation software for the resonant circuitry of tesla coils called Scantesla h
 
 Guidelines for the design of the resonant circuits can be found at most of the above mentioned sites.
 
-A modular back plane based tesla coil driver implementation have been designed and implemented by the author together with other members of Omega Verksted\footnote{Omega Verksted is a association of electronics and hobby interested students at the Norwegian University of Science and Technology (NTNU) founded in 1971.}. This is based on earlier designs by members of Omega Verksted, the last major implementation at Omega Verksted was done in 2009 mostly by Dewald de Bruyn.
+A modular back plane based tesla coil driver implementation have been designed and implemented by the author together with other members of Omega Verksted\footnote{Omega Verksted is a association of electronics and hobby interested students at the Norwegian University of Science and Technology (NTNU) founded in 1971.} \citep{prosjektoppgave} \citep{githubtesla}. This is based on earlier designs by members of Omega Verksted, the last major implementation at Omega Verksted was done in 2009 mostly by Dewald de Bruyn.
 
 %Onetesla sells commercially
 
 %Tables for coil aspect ratios.
+
+\section{Overview}
+This thesis will begin by discussing an implementation of a DRSSTC, substantiating the functionality of sub circuits with mathematics. Then discuss the mathematical description of the resonant transformer, varying component sizes, plotting and simulating the transfer functions. Then present some measurements done on a physical implemented DRSSTC.

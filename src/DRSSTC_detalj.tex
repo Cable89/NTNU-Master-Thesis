@@ -7,39 +7,48 @@
 
 \section{Pulse shaper}
 \label{sec:pulseshaper}
-The purpose of the pulse shaper is to take the input signal $X1$ and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver. The first step in the pulse shaper is to transform the input signal $X1$ to two level as shown in \cref{fig:schmidt}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{img/Smitt_hysteresis_graph_x1_x2.png}
-    \caption{Tranformation of $X1$ to two level \citep{wikimedia}}       
-    \label{fig:schmidt}
-\end{figure}
-
-Here we see that the transformation to two level is done with a schmidt trigger, we also see that the pulses following immediately after the first pulse is suppressed wich will be explained below.
-
-Then the triggering signal $X2$ is two level and contains two pieces of information from $X1$, the frequency $f_{X2}$ (tone) and the volume (intensity). \Cref{fig:x2detail} shows the signal X2.
+The purpose of the pulse shaper is to take the input signal $X1$ and transform it to be suitable for a DRSSTC, in addition to not letting harmful signals through. The pulse shaper in this implementation is built separate from the driver. The first step in the pulse shaper is to transform the input signal $X1$ to two level as shown in \cref{fig:x2detail}.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[x=16mm,
-       every edge/.style = {draw, Straight Barb-Straight Barb},
-every edge quotes/.style = {fill=white,font=\footnotesize}
-                    ]
-%\draw[thick,black, smooth,domain=9:101] plot (\x/10,1);
-\draw[thick] (0.5,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (5,0) -- (5,1) -- (6,1) -- (6,0) -- (7.6,0);
-\draw (0,0.5) node {$X2$}; %label
+    \begin{tikzpicture}[x=16mm,
+        every edge/.style = {draw, Straight Barb-Straight Barb},
+        every edge quotes/.style = {fill=white,font=\footnotesize}
+        ]
+    \draw[thick]
+    (0.5,3) sin (1.5,4) cos (2.5,3) sin (3.5,2) cos (4.5,3) sin (5,4) cos (5.5,3) sin (6,2) cos (6.5,3) sin (7,4) cos (7.5,3);
+    \draw[thick,dashed]  (0.4,3) -- (7.6,3);
+    \draw[dashed,green]  (0.5,3.7) -- (7.5,3.7);
+    \draw[dashed,red]  (0.5,3.2) -- (7.5,3.2);
 
-\foreach \x in {1, 2, 5, 6}
-    \draw[dashed]  (\x,-0.8) -- ++ (0,1.0);
+    \draw (0,3) node {$X1$}; %label
 
-\draw   (1.0,-0.3) edge ["$T_H$"] ++ (1,0)
-        (5.0,-0.3) edge ["$T_H$"] ++ (1,0)
-        (1.0,-0.6) edge ["$T_P$"] ++ (4,0);
+    \draw[thick] (0.5,0) -- (1,0) -- (1,1) -- (2,1) -- (2,0) -- (4.75,0) -- (4.75,1) -- (5.45,1) -- (5.45,0) -- (7.6,0);
+    \draw (0,0.5) node {$X2$}; %label
+
+    \draw[dashed,green] (1.00,-1.7) -- ++ (0,5.6);
+    \draw[dashed,red]   (2.35,-0.5) -- ++ (0,4);
+    \draw[dashed,green] (4.75,-1.7) -- ++ (0,5.6);
+    \draw[dashed,red]   (5.45,-0.5) -- ++ (0,4);
+    
+    \draw[dashed] (2.00,-0.8) -- ++ (0,1);
+    \draw[dashed] (5.75,-0.8) -- ++ (0,1);
+
+    \draw   (1.00,-0.30) edge ["$T_H$"]      (2.00,-0.30)
+            (1.00,-0.75) edge ["$T_{HM}$"]   (2.00,-0.75)
+            (4.75,-0.30) edge ["$T_H$"]      (5.45,-0.30)
+            (4.75,-0.75) edge ["$T_{HM}$"]   (5.75,-0.75)
+            (1.00,-1.20) edge ["$T_P$"]      (4.75,-1.20)
+            (1.00,-1.65) edge ["$T_{PM}$"]   (4.25,-1.65)
+            (4.75,-1.65) edge ["$T_{PM}$"]   (8.00,-1.65);
     \end{tikzpicture}
     \caption{Detail view of signal $X2$}
     \label{fig:x2detail}
 \end{figure}{}
+
+Here we see that the transformation to two level is done with a schmidt trigger, we also see that the pulses following immediately after the first pulse is suppressed wich will be explained below.
+
+Then the triggering signal $X2$ is two level and contains two pieces of information from $X1$, the frequency $f_{X2}$ (tone) and the volume (intensity).
 
 Where the frequency $f_{X2}=\frac{1}{T_P}$ is given by the time $T_P$ between the positive flanks of the signal. This is the base harmonic of the acoustic tone heard at the output of the system. The volume is given by the duty cycle of the pulses $D = \frac{T_H}{T_P}$. \Cref{fig:tones} shows different tones (varying $T_P$),
 
@@ -65,8 +74,8 @@ and \cref{fig:volumes} shows different volumes (varying $T_H$).
     \label{fig:volumes}
 \end{figure}{}
 
-We also need to prevent harmful signals, meaning signals that may lead to destructive failure at the output. This is done by limiting the max duty cycle of the pulses as well as limiting the frequencies allowed. The duty cycle of the pulses is limited by choosing a maximum time $T_H$ the pulse is allowed to be high, this time is independent of the frequency. This means the preset max duty cycle is dependent on the frequency of the pulse.
-Limiting the frequencies allowed is done by choosing a minimum time $T_P$ after a pulse goes high until $X2$ is allowed to go high again.
+We also need to prevent harmful signals, meaning signals that may lead to destructive failure at the output. This is done by limiting the max duty cycle of the pulses as well as limiting the frequencies allowed. The duty cycle of the pulses is limited by choosing a maximum time $T_{HM}$ the pulse is allowed to be high, this time is independent of the frequency. This means the preset max duty cycle is dependent on the frequency of the pulse.
+Limiting the frequencies allowed is done by choosing a minimum time $T_{PM}$ after a pulse goes high until $X2$ is allowed to go high again.
 
 How this can be implemented is not discussed any further in this thesis. But this thesis should give the basis for choosing maximum and minimum values for $T_H$ and $T_P$.
 
@@ -228,8 +237,6 @@ The relation between the (peak) current in the primary resonance circuit and the
 \begin{equation} \label{eq:limittrans}
     \frac{U_{X9'}}{I_{X6}} = \frac{n_1}{n_2} \cdot \frac{R_2}{\sqrt{1+(2 \pi 2 f R_2 C_3)^2}}
 \end{equation}
-
-\todo{Check equation}
 
 Where $\frac{n_1}{n_2}$ is the winding ratio of the feedback transformer, $I_{X6}$ is the current running in the primary resonance circuit, $f$ is the fundamental frequency of $I_{X6}$ (half the frequency of the signal on the input of the comparator because of the full bridge rectifier). Given $n_1 = 1$, $n_2 = 100$, $R_2 = 10\Omega$, $C_3 = 1$nF, f = 110kHz, we get $\frac{U_{X9'}}{I_{X6}} = 0,1$ Volts per Ampere.
 
