@@ -2,40 +2,40 @@
 %What are the measurement/model results
 
 \chapter{Measurements}
-To confirm that the signals X1-X9 have the alleged behaviour measurements have been done on a physically implemented DRSSTC, with the component values shown in the schematics in this thesis. The DRSSTC the measurements are done on is the one constructed by Omega Verksted \citep{prosjektoppgave} \citep{githubtesla}.
+To confirm that the signals $X1$-$X9$ have the alleged behaviour measurements have been done on a physically implemented DRSSTC, with the component values shown in the schematics in this thesis. The DRSSTC the measurements are done on is the one constructed by Omega Verksted \citep{prosjektoppgave} \citep{githubtesla}.
 
 
 \section{Voltage measurements}
 The voltage measurements of the tesla coil were performed in the high voltage laboratory at the department of electrical power engineering at NTNU.
 
-\Cref{fig:m_x1-x2} shows the signal X1 into the pulse shaper and the resulting signal X2 on the output of the pulse shaper. The interrupter and power amplifier is not connected.
+\Cref{fig:m_x1-x2} shows the signal $X1$ into the pulse shaper and the resulting signal $X2$ on the output of the pulse shaper. The interrupter and power amplifier is not connected.
 
 \begin{figure}[H]
     \centering
     \includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=\textwidth]{img/X1-X2.eps}
-    \caption{X1 X2}
+    \caption{$X1 $X2}
     \label{fig:m_x1-x2}
 \end{figure}
 
-Here we see that the sinusoidal signal X1 with zero DC component is transformed into a two level signal X2 between 0V and 5V. We also see that it has a constant duty cycle.
+Here we see that the sinusoidal signal $X1$ with zero DC component is transformed into a two level signal $X2$ between 0V and 5V. We also see that it has a constant duty cycle.
 
-\Cref{fig:m_x1-x2-x4-x8} shows the same signals X1 and X2 as in \cref{fig:m_x1-x2} but also shows the output of the interrupter X4 as well as the feedback signal X8. Note that X2 is measured after the optical channel.
+\Cref{fig:m_x1-x2-x4-x8} shows the same signals $X1$ and $X2$ as in \cref{fig:m_x1-x2} but also shows the output of the interrupter $X4$ as well as the feedback signal $X8$. Note that $X2$ is measured after the optical channel (\cref{sec:optical}).
 
 \begin{figure}[H]
     \centering
     \includegraphics[trim={1cm 0cm 1cm 0cm},clip,width=\textwidth]{img/X1-X2-X4-X8.eps}
-    \caption{X1 X2 X4 X8}
+    \caption{$X1$ $X2$ $X4$ $X8$}
     \label{fig:m_x1-x2-x4-x8}
 \end{figure}
 
-First it is worth noting that we have more noise in \cref{fig:m_x1-x2-x4-x8} than in \cref{fig:m_x1-x2} because the interrupter, power amplifier, and resonant circuit are connected and turned on. We see that this electromagnetic noise affects how well X2 is generated, and the duty cycle is no longer constant. This is a source of noise on the output acoustic signal. The envelope of X4 follows X2 as expected. The envelope of X8 follows X2 as well as it having a ring down.
+First it is worth noting that we have more noise in \cref{fig:m_x1-x2-x4-x8} than in \cref{fig:m_x1-x2} because the interrupter, power amplifier, and resonant circuit are connected and turned on. We see that this electromagnetic noise affects how well $X2$ is generated, and the duty cycle is no longer constant. This is a source of noise on the output acoustic signal. The envelope of $X4$ follows $X2$ as expected. The envelope of $X8$ follows $X2$ as well as it having a ring down.
 
 \Cref{fig:m_x6} shows the voltage on the output of the power amplifier $U_{X6}$.
 
 \begin{figure}[H]
     \centering
     \includegraphics[trim={3.2cm 0cm 3.2cm 0cm},clip,width=\textwidth]{img/X6singlepulse.eps}
-    \caption{X6}
+    \caption{$X6$}
     \label{fig:m_x6}
 \end{figure}
 
@@ -72,7 +72,7 @@ The acoustic measurements done but not discussed here is attached in \cref{sec:a
 
 %Recording of sweep
 
-\Cref{fig:period_1k} shows a periodogram of the recorded audio signal with a 1kHz input on X2. The amplitude is the energy of the signal and the x-axis shows the frequency.
+\Cref{fig:period_1k} shows a periodogram of the recorded audio signal with a 1kHz input on $X2$. The amplitude is the energy of the signal and the x-axis shows the frequency.
 \begin{figure}[H]
     \centering
     \includegraphics[trim={0cm 1.6cm 0cm 2cm},clip,width=\textwidth]{img/Periodogram_1khz-09.eps}
@@ -82,7 +82,7 @@ The acoustic measurements done but not discussed here is attached in \cref{sec:a
 
 Here we see the base frequency 1kHz and harmonics spaced 1kHz apart all the way through the range of human hearing. We see that the lowest three harmonics together with the base frequency are dominant, then the energy of the harmonics start to decrease. This implies the waveform rises sharply and has a short duration, which is consistent with a series of electrical discharges. The amplitudes of the harmonics are shown in \cref{tab:1k_amps}.
 
-\Cref{fig:recorded_1k} shows the waveform of the recorded audio signal with a 1kHz input on X2.
+\Cref{fig:recorded_1k} shows the waveform of the recorded audio signal with a 1kHz input on $X2$.
 
 \begin{figure}[H]
     \centering

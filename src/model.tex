@@ -188,16 +188,16 @@ In \cref{fig:step}, we see the step and impulse responses of the transfer functi
 
 Here we see that we have a damped sinusiodal response with a frequency $f_s$ of 156kHz witch is the same frequency as the resonance frequency $f_0$ of the frequency response. This response attenuates within a few cycles.
 
-\Cref{fig:polezero} shows the poles and zeros of the transfer function $H(s)$ of the resonant circuit.
+\Cref{fig:polezero} shows the poles and zeros of the transfer function $H(s)$ of the resonant circuit in angular frequency.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigPoleZeroPlot.eps}
-    \caption{PoleZeroPlot for $H(s)$}
+    \caption{PoleZeroPlot for $H(s)$ in angular frequency}
     \label{fig:polezero}
 \end{figure}
 
-\Cref{tab:coilrigpoles} shows the numerical values of the poles and zeros of the transfer function $H(s)$ of the resonant circuit.
+\Cref{tab:coilrigpoles} shows the numerical values of the poles and zeros of the transfer function $H(s)$ of the resonant circuit in angular frequency.
 
 \begin{table}[H]
     \centering
@@ -208,7 +208,7 @@ Here we see that we have a damped sinusiodal response with a frequency $f_s$ of 
         $(-0,4 - 9,9i)\cdot 10^{5} s^{-1}$ & $0$ \\
         $(-2,1 + 0i)  \cdot 10^{5} s^{-1}$ & $-2\cdot 10^{5} s^{-1}$ \\
     \end{tabular}
-    \caption{Poles and zeros for $H(s)$}
+    \caption{Poles and zeros for $H(s)$ in angular frequency}
     \label{tab:coilrigpoles}
 \end{table}
 
@@ -219,18 +219,18 @@ Here we observe a complex conjugated pole pair in the left half plane close to t
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/CoilRigSimulation.eps}
-    \caption{Linear simulation of transfer function $H(s)$ with square wave X6 with $f=f_0$ as input, and X7 is output}
+    \caption{Linear simulation of transfer function $H(s)$ with square wave $X6$ with $f=f_0$ as input, and $X7$ is output}
     \label{fig:crlinsim}
 \end{figure}
 
-We see here that the output signal X7 starts with a quarter period of the step response shown in \cref{fig:step}, and then when the voltage peaks, meaning when the differential of the voltage is zero, a new step response with opposite phase is added to the output signal. This makes the output signal grow rapidly for ten cycles before flattening out at 427kV.
+We see here that the output signal $X7$ starts with a quarter period of the step response shown in \cref{fig:step}, and then when the voltage peaks, meaning when the differential of the voltage is zero, a new step response with opposite phase is added to the output signal. This makes the output signal grow rapidly for ten cycles before flattening out at 427kV.
 
 \Cref{fig:crlinsim10T} shows the same simulation as \cref{fig:crlinsim}, but here the input signal is set to zero after 10 periods.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/Linsim_10T.eps}
-    \caption{Linear simulation of transfer function $H(s)$ with 10 periods square wave X6 with $f=f_0$ as input, and X7 is output}
+    \caption{Linear simulation of transfer function $H(s)$ with 10 periods square wave $X6$ with $f=f_0$ as input, and $X7$ is output}
     \label{fig:crlinsim10T}
 \end{figure}
 
@@ -239,7 +239,7 @@ Here we see that the voltage continues to resonate after the input is set to zer
 \newpage
 \section{Transfer function for primary current I1}
 \label{sec:mod_fb}
-If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_{X6}}$ we get the transfer function for the current flowing in the primary resonant circuit $I_1$ this is the signal that is coupled to the feedback signals X8 and X9 with current sense transformers $L_3$ and $L_4$. This is transfer function $H_{FB}$ is shown in \cref{eq:fb_1}. Where $Z_1$ to $Z_4$ are the same impedances as given in \cref{eq:4}.
+If we use \cref{eq:1} and \cref{eq:2} and solve for $\frac{I_1}{U_{X6}}$ we get the transfer function for the current flowing in the primary resonant circuit $I_1$ this is the signal that is coupled to the feedback signals $X8$ and $X9$ with current sense transformers $L_3$ and $L_4$. This is transfer function $H_{FB}$ is shown in \cref{eq:fb_1}. Where $Z_1$ to $Z_4$ are the same impedances as given in \cref{eq:4}.
 
 \begin{equation} \label{eq:fb_1}
 \frac{I_1}{U_{X6}} = H_{FB}(s) = \frac{Z_2-Z_3-Z_4}{(Z_1+Z_2)(Z_2-Z_3-Z_4)-Z_2^2}
@@ -306,16 +306,16 @@ Here we see a much sharper peak at the resonant frequency than in the bode plot 
 
 Here we see a damped sinusoiodal response with a frequency $f_s$ of 167kHz witch is slightly higher than the resonant frequency $f_0$ of 160kHz. The step response of the feedback signal attenuates slower than the step response of the resonant circuit.
 
-\Cref{fig:fbpolezero} shows the pole and zero plot for the transfer function for the feedback signals $H_{FB}(s)$.
+\Cref{fig:fbpolezero} shows the pole and zero plot for the transfer function for the feedback signals $H_{FB}(s)$ in angular frequency.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/FeedBackPoleZeroPlot.eps}
-    \caption{PoleZeroPlot for $H_{FB}(s)$}
+    \caption{PoleZeroPlot for $H_{FB}(s)$ in angular frequency}
     \label{fig:fbpolezero}
 \end{figure}
 
-\Cref{tab:fbcoilrigpoles} shows the numerical values of the poles and zeros of the transfer function for the feedback signals $H_{FB}(s)$.
+\Cref{tab:fbcoilrigpoles} shows the numerical values of the poles and zeros of the transfer function for the feedback signals $H_{FB}(s)$ in angular frequency.
 
 \begin{table}[H]
     \centering
@@ -326,7 +326,7 @@ Here we see a damped sinusoiodal response with a frequency $f_s$ of 167kHz witch
         $(-0,5 - 10i)\cdot 10^{5} s^{-1}$ & $-48\cdot 10^{5} s^{-1}$ \\
         $(-2,1 + 0i)\cdot 10^{5} s^{-1}$ & $-2,1\cdot 10^{5} s^{-1}$ \\
     \end{tabular}
-    \caption{Poles and zeros for $H_{FB}(s)$}
+    \caption{Poles and zeros for $H_{FB}(s)$ in angular frequency}
     \label{tab:fbcoilrigpoles}
 \end{table}
 
